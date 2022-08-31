@@ -8,8 +8,7 @@ const Home = () => {
   return (
     <div>
       <Header />
-      <div>Home</div>
-      <div>{logined ? "로그인됨" : "로그인안됨"}</div>
+      <div></div>
     </div>
   );
 };
