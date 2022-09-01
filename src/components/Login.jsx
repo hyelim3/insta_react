@@ -35,10 +35,9 @@ const Login = ({ onLoginToggle, setLoginToggle }) => {
       </div>
       <div className="Button">
         <button className="LoginButton">로그인</button>
-
-        <button className="UserButton">
-          <Link to="/Join">가입하기</Link>
-        </button>
+        <a href="/Join">
+          <button className="UserButton">가입하기</button>
+        </a>
       </div>
     </div>
   );

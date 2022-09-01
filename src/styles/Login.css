@@ -91,12 +91,13 @@ body {
   color: white;
   padding: 4px;
 }
-div > .UserButton {
+div .UserButton {
   width: 280px;
   background-color: rgba(30, 168, 228, 0.5);
   color: white;
   padding: 4px;
 }
+
 .Button {
   position: absolute;
   top: 70%;

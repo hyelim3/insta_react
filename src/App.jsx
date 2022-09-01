@@ -22,12 +22,6 @@ function App() {
     <Router>
       {/* A <Switch> looks through its children <Route>s and
       renders the first one that matches the current URL. */}
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/join" element={<Join />} />
-      </Routes>
       <Head onLoginToggle={onLoginToggle} setLoginToggle={setLoginToggle} />
       <Layout>
         <Profile />
@@ -37,6 +31,11 @@ function App() {
       )}
       <Image />
       <Grid />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/join" element={<Join />} />
+      </Routes>
     </Router>
   );
 }
