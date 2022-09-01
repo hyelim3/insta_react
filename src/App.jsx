@@ -8,9 +8,9 @@ import Image from "./components/Image";
 import axios from "axios";
 import Login from "./components/Login";
 import Head from "./components/Head";
-import "./App.css";
 import Profile from "./components/Profile";
 import Layout from "./layouts/Layout";
+import "./App.css";
 function App() {
   const [loginToggle, setLoginToggle] = useState(false);
   const onLoginToggle = () => {
@@ -20,19 +20,17 @@ function App() {
     //https://velog.io/@jjhstoday/AWS-EC2%EC%97%90-React-Node.js-%EC%95%B1-%EB%B0%B0%ED%8F%AC%ED%95%98%EA%B8%B0-1-AWS-EC2-instance-%EC%83%9D%EC%84%B1
     // AWS React 연결 블로그
     <Router>
-      {/* A <Switch> looks through its children <Route>s and
-      renders the first one that matches the current URL. */}
-      <Head onLoginToggle={onLoginToggle} setLoginToggle={setLoginToggle} />
-      <Layout>
-        <Profile />
-      </Layout>
-      {loginToggle && (
-        <Login onLoginToggle={onLoginToggle} setLoginToggle={setLoginToggle} />
-      )}
-      <Image />
-      <Grid />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={
+            <Home
+              onLoginToggle={onLoginToggle}
+              setLoginToggle={setLoginToggle}
+              loginToggle={loginToggle}
+            />
+          }
+        />
         <Route path="/about" element={<About />} />
         <Route path="/join" element={<Join />} />
       </Routes>

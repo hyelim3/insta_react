@@ -7,6 +7,7 @@
   height: 600px;
   border: 1.5px rgb(209, 209, 209) solid;
   position: relative;
+  margin-top: 100px;
 }
 
 .joinBar > .Logo {
@@ -17,6 +18,18 @@
   display: flex;
   justify-content: center;
   width: 200px;
+}
+.joinBar_Return {
+  display: inline-block;
+  position: relative;
+  left: 80%;
+  top: 2%;
+  border: 0.7px rgb(209, 209, 209) solid;
+  padding: 0 5px;
+  padding-top: 3px;
+}
+.joinBar_Return > a {
+  display: block;
 }
 .joinBar_span {
   position: relative;
