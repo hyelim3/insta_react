@@ -44,6 +44,7 @@ export default App;
 // $ npm i express-fileupload
 // $ npm i axios
 // $ npm i Recoil
+// $ npm i react-router-dom
 // $ npm i recoil-persist
 // -------> SQL IMG 전용 테이블 생성
 // CREATE TABLE img_table(
