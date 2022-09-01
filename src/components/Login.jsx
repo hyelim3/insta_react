@@ -3,7 +3,7 @@ import "../styles/Login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import Logo from "../public/Logo.PNG";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
-
+import { Link } from "react-router-dom";
 // $ npm i @fortawesome/fontawesome-svg-core
 // $ npm i @fortawesome/free-solid-svg-icons @fortawesome/free-regular-svg-icons @fortawesome/free-brands-svg-icons
 // $ npm i @fortawesome/react-fontawesome 폰트어썸사용법
@@ -35,7 +35,10 @@ const Login = ({ onLoginToggle, setLoginToggle }) => {
       </div>
       <div className="Button">
         <button className="LoginButton">로그인</button>
-        <button className="UserButton">가입하기</button>
+
+        <button className="UserButton">
+          <Link to="/Join">가입하기</Link>
+        </button>
       </div>
     </div>
   );

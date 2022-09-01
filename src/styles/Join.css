@@ -6,11 +6,12 @@
   width: 400px;
   height: 600px;
   border: 1.5px rgb(209, 209, 209) solid;
+  position: relative;
 }
 
 .joinBar > .Logo {
   position: absolute;
-  top: 10%;
+  top: 15%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
