@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import About from "./routes/About";
 import Home from "./routes/Home";
+import Join from "./routes/Join";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Grid from "./components/Grid";
 import Image from "./components/Image";
@@ -16,6 +17,8 @@ function App() {
     setLoginToggle(!loginToggle);
   };
   return (
+    //https://velog.io/@jjhstoday/AWS-EC2%EC%97%90-React-Node.js-%EC%95%B1-%EB%B0%B0%ED%8F%AC%ED%95%98%EA%B8%B0-1-AWS-EC2-instance-%EC%83%9D%EC%84%B1
+    // AWS React 연결 블로그
     <Router>
       {/* A <Switch> looks through its children <Route>s and
       renders the first one that matches the current URL. */}
@@ -23,6 +26,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/join" element={<Join />} />
       </Routes>
       <Head onLoginToggle={onLoginToggle} setLoginToggle={setLoginToggle} />
       <Layout>
