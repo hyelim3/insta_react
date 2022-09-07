@@ -1,9 +1,10 @@
 import React from "react";
-import "../styles/profile.css";
+import "../styles/UnLoginedprofile.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import userEvent from "@testing-library/user-event";
 
-function Profile() {
+function UnLoginedProfile({ user }) {
   return (
     <div className="flex-col flex  h-128 Profiles">
       <div className="flex h-3/5 ">
@@ -19,7 +20,7 @@ function Profile() {
         </div>
         <div className="w-2/3 ">
           <div className="flex justify-end items-center h-2/5">
-            <div className="text-2xl font-light mr-auto mt-2">SBS0712</div>
+            <div className="text-2xl font-light mr-auto mt-2">SBS07</div>
             <button className="rounded-md border-gray-400 bg-white text-black hover:bg-white text-black hover:rounded-md hover:border-gray-400 btn btn-sm mt-2 mr-4">
               메시지 보내기
             </button>
@@ -123,4 +124,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default UnLoginedProfile;

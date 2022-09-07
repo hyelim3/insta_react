@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import Logo from "../public/Logo.PNG";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import LoginedHead from "./LoginedHead";
+import LoginedHome from "../routes/LoginedHome";
 // $ npm i @fortawesome/fontawesome-svg-core
 // $ npm i @fortawesome/free-solid-svg-icons @fortawesome/free-regular-svg-icons @fortawesome/free-brands-svg-icons
 // $ npm i @fortawesome/react-fontawesome 폰트어썸사용법
@@ -13,7 +15,17 @@ import { Link } from "react-router-dom";
   /* <FontAwesomeIcon icon={faTrashCan} /> 본문호출법*/
 }
 
-const Login = ({ onLoginToggle, setLoginToggle }) => {
+const Login = ({ onLoginToggle, setLoginToggle, onLogin }) => {
+  const [idValue, setIdValue] = useState("");
+  const [passValue, setPassValue] = useState("");
+
+  const onIdChange = (e) => {
+    setIdValue(e.target.value);
+  };
+
+  const onPassChagne = (e) => {
+    setPassValue(e.target.value);
+  };
   return (
     <div className="Login">
       <img className="Logo" src="https://i.postimg.cc/sD6LQB7F/Logo.png" />
@@ -27,14 +39,29 @@ const Login = ({ onLoginToggle, setLoginToggle }) => {
       </button>
       <div className="input1">
         <input
+          onChange={onIdChange}
+          value={idValue}
           type="text"
           placeholder="아이디"
           style={{ marginBottom: "5px" }}
         />
-        <input type="Password" placeholder="비밀번호" />
+        <input
+          onChange={onPassChagne}
+          value={passValue}
+          type="Password"
+          placeholder="비밀번호"
+        />
       </div>
+
       <div className="Button">
-        <button className="LoginButton">로그인</button>
+        <button
+          className="LoginButton"
+          onClick={() => {
+            onLogin(idValue, passValue);
+          }}
+        >
+          로그인
+        </button>
         <a href="/Join">
           <button className="UserButton">가입하기</button>
         </a>

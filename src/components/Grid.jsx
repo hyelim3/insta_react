@@ -18,7 +18,7 @@ const Grid = () => {
         });
         setIsLoading(false);
         setImages(image.data); // -> 객체배열.
-        console.log(image.data);
+        // console.log(image.data);
         await new Promise((resolve, reject) => {
           setTimeout(() => {
             resolve();
@@ -43,14 +43,14 @@ const Grid = () => {
         <ul className="list-box grid grid-cols-3 gap-2 sm:gap-2 md:gap-3 lg:gap-4">
           <li>
             <a href="#">
-              {/* <img src={images[0].imgSrc} alt="" /> */}
+              <img src={images[0].imgSrc} alt="" />
               <div>
                 <FontAwesomeIcon icon={faHeart} className="icon" />
-                {/* <span>{images[0].imgLike}</span> */}
+                <span>{images[0].imgLike}</span>
               </div>
               <div>
                 <FontAwesomeIcon icon={faCommentDots} className="icon" />
-                {/* <span>{images[0].imgReply}</span> */}
+                <span>{images[0].imgReply}</span>
               </div>
             </a>
           </li>

@@ -1,6 +1,11 @@
 import React from "react";
 import "../styles/Head.css";
-const Head = ({ setLoginToggle, onLoginToggle }) => {
+const UnLoginedHead = ({
+  setLoginToggle,
+  onLoginToggle,
+  logined,
+  setLogined,
+}) => {
   return (
     <div className="Topbar">
       <div className="navbar bg-base-100 Topbar_logo">
@@ -70,4 +75,4 @@ const Head = ({ setLoginToggle, onLoginToggle }) => {
   );
 };
 
-export default Head;
+export default UnLoginedHead;

@@ -9,7 +9,6 @@
   position: relative;
   margin-top: 100px;
 }
-
 .joinBar > .Logo {
   position: absolute;
   top: 15%;
@@ -40,7 +39,8 @@
   font-weight: bolder;
   margin: 0 auto;
 }
-.joinInput {
+
+.joinMemberBtn {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -49,7 +49,8 @@
 
   top: 30%;
 }
-.joinInput * {
+
+.joinMemberBtn * {
   border: 1.5px rgb(209, 209, 209) solid;
   margin: 5px;
   width: 300px;
@@ -66,4 +67,22 @@
   height: 40px;
   background-color: rgba(30, 168, 228, 0.5);
   color: white;
+}
+.joinComplete {
+  position: absolute;
+  width: 270px;
+  height: 100px;
+  left: 15%;
+  top: 40%;
+  background-color: rgba(30, 168, 228, 0.8);
+  color: white;
+}
+.joinComplete > a {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
 }

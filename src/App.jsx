@@ -1,40 +1,117 @@
 import React, { useState, useEffect } from "react";
 import About from "./routes/About";
-import Home from "./routes/Home";
+import Home from "./routes/UnLoginedHome";
 import Join from "./routes/Join";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Grid from "./components/Grid";
 import Image from "./components/Image";
 import axios from "axios";
 import Login from "./components/Login";
-import Head from "./components/Head";
-import Profile from "./components/Profile";
+import LoginedHead from "./components/LoginedHead";
+import UnLoginedHead from "./components/UnLoginedHead";
+import Profile from "./components/LoginedProfile";
 import Layout from "./layouts/Layout";
 import "./App.css";
+import { faPooBolt } from "@fortawesome/free-solid-svg-icons";
+import { authenticatedState } from "./recoil/auth";
+import { useRecoilState } from "recoil";
+import LoginedHome from "./routes/LoginedHome";
+import UnLoginHead from "./components/UnLoginedHead";
+import UnLoginedHome from "./routes/UnLoginedHome";
+
 function App() {
   const [loginToggle, setLoginToggle] = useState(false);
+  const [logined, setLogined] = useRecoilState(authenticatedState);
+  const [error, setError] = useState(null);
+  const [user, setUser] = useState("");
+
+  //회원가입_Join
+  const joinmember = async (phonenumber, name, id, pass) => {
+    try {
+      await axios({
+        url: `http://localhost:3002/joinmember`,
+        method: "POST",
+        data: {
+          phone: phonenumber,
+          username: name,
+          userid: id,
+          password: pass,
+        },
+      });
+    } catch (e) {
+      console.log("에러");
+    }
+  };
+
+  //로그인을 누르고 꺼짐
   const onLoginToggle = () => {
     setLoginToggle(!loginToggle);
   };
+
+  //로그인
+  const onLogin = async (idValue, passValue) => {
+    try {
+      const data = await axios({
+        url: `http://localhost:3002/loginmember`,
+        method: "POST",
+        data: { userid: idValue, password: passValue },
+      });
+
+      setLogined(data.data.authenticated); //객체 -> 배열 ->
+      onLoginToggle();
+      setUser(data.data.user); //모든 걸 다가짐
+      console.log(data.data.authenticated);
+    } catch (e) {
+      console.log("에러");
+      setError(e);
+    }
+  };
+
   return (
     //https://velog.io/@jjhstoday/AWS-EC2%EC%97%90-React-Node.js-%EC%95%B1-%EB%B0%B0%ED%8F%AC%ED%95%98%EA%B8%B0-1-AWS-EC2-instance-%EC%83%9D%EC%84%B1
     // AWS React 연결 블로그
-    <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Home
-              onLoginToggle={onLoginToggle}
-              setLoginToggle={setLoginToggle}
-              loginToggle={loginToggle}
+    <div>
+      {logined ? (
+        <Router>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <LoginedHome
+                  onLoginToggle={onLoginToggle}
+                  setLoginToggle={setLoginToggle}
+                  onLogin={onLogin}
+                  loginToggle={loginToggle}
+                  logined={logined}
+                  setLogined={setLogined}
+                  user={user}
+                />
+              }
             />
-          }
-        />
-        <Route path="/about" element={<About />} />
-        <Route path="/join" element={<Join />} />
-      </Routes>
-    </Router>
+            <Route path="/about" element={<About />} />
+            <Route path="/join" element={<Join joinmember={joinmember} />} />
+          </Routes>
+        </Router>
+      ) : (
+        <Router>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <UnLoginedHome
+                  onLoginToggle={onLoginToggle}
+                  setLoginToggle={setLoginToggle}
+                  onLogin={onLogin}
+                  loginToggle={loginToggle}
+                />
+              }
+            />
+            <Route path="/about" element={<About />} />
+            <Route path="/join" element={<Join joinmember={joinmember} />} />
+          </Routes>
+        </Router>
+      )}
+    </div>
   );
 }
 
