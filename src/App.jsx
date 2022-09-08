@@ -18,12 +18,13 @@ import { useRecoilState } from "recoil";
 import LoginedHome from "./routes/LoginedHome";
 import UnLoginHead from "./components/UnLoginedHead";
 import UnLoginedHome from "./routes/UnLoginedHome";
+import Welcome from "./components/Welcome";
 
 function App() {
   const [loginToggle, setLoginToggle] = useState(false);
   const [logined, setLogined] = useRecoilState(authenticatedState);
   const [error, setError] = useState(null);
-  const [user, setUser] = useState("");
+  const [user, setUser] = useRecoilState(authenticatedState);
 
   //회원가입_Join
   const joinmember = async (phonenumber, name, id, pass) => {
@@ -45,7 +46,7 @@ function App() {
 
   //로그인을 누르고 꺼짐
   const onLoginToggle = () => {
-    setLoginToggle(!loginToggle);
+    setLoginToggle(false); //로그인 안뜬다!!!!!
   };
 
   //로그인
@@ -59,6 +60,7 @@ function App() {
 
       setLogined(data.data.authenticated); //객체 -> 배열 ->
       onLoginToggle();
+
       setUser(data.data.user); //모든 걸 다가짐
       console.log(data.data.authenticated);
     } catch (e) {
@@ -98,12 +100,18 @@ function App() {
             <Route
               path="/"
               element={
-                <UnLoginedHome
-                  onLoginToggle={onLoginToggle}
-                  setLoginToggle={setLoginToggle}
+                <Welcome
                   onLogin={onLogin}
-                  loginToggle={loginToggle}
+                  logined={logined}
+                  setLogined={setLogined}
+                  onLoginToggle={onLoginToggle}
                 />
+                //   <UnLoginedHome
+                //   onLoginToggle={onLoginToggle}
+                //   setLoginToggle={setLoginToggle}
+                //   onLogin={onLogin}
+                //   loginToggle={loginToggle}
+                // />
               }
             />
             <Route path="/about" element={<About />} />

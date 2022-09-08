@@ -26,6 +26,7 @@ const LoginedHome = ({
         setLoginToggle={setLoginToggle}
         logined={logined}
         setLogined={setLogined}
+        user={user}
       />
       <Layout>
         <LoginedProfile user={user} />

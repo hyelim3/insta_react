@@ -58,6 +58,7 @@ const Login = ({ onLoginToggle, setLoginToggle, onLogin }) => {
           className="LoginButton"
           onClick={() => {
             onLogin(idValue, passValue);
+            onLoginToggle(false);
           }}
         >
           로그인
