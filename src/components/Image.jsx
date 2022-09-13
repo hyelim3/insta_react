@@ -3,7 +3,7 @@ import axios from "axios";
 
 const BASE_URL = "http://localhost:3002";
 
-const Image = ({ images, setImages }) => {
+const Image = ({ images, setImages, user }) => {
   const [content, setContent] = useState("");
   const [uploadedImg, setUploadedImg] = useState({
     fileName: "",
@@ -24,12 +24,12 @@ const Image = ({ images, setImages }) => {
     const formData = new FormData();
     formData.append("img", content);
     axios
-      .post("http://localhost:3002/upload", formData)
+      .post(`http://localhost:3002/upload/${user.userid}`, formData)
       .then((res) => {
         const { fileName } = res.data;
 
         setUploadedImg({ fileName });
-        alert("The file is successfully uploaded");
+        alert("업로드완료");
       })
       .catch((err) => {
         console.error(err);
@@ -54,7 +54,12 @@ const Image = ({ images, setImages }) => {
             }}
           />
         </div>
-        <input type="submit" value="Upload" className="btn" />
+        <input
+          type="submit"
+          value="Upload"
+          className="btn"
+          onClick={() => {}}
+        />
       </form>
     </div>
   );

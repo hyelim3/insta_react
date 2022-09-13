@@ -25,6 +25,7 @@ function App() {
   const [logined, setLogined] = useRecoilState(authenticatedState);
   const [error, setError] = useState(null);
   const [user, setUser] = useRecoilState(authenticatedState);
+  // const [images, setImages] = useState([]);
 
   //회원가입_Join
   const joinmember = async (phonenumber, name, id, pass) => {

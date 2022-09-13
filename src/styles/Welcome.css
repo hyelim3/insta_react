@@ -14,7 +14,7 @@
 }
 .welcome > .img-box > img {
   position: absolute;
-  width: 100%;
+  width: 90%;
   object-fit: cover;
   max-width: 1500px;
   max-height: 800px;
