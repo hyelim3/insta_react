@@ -1,10 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "../styles/Loginedprofile.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import userEvent from "@testing-library/user-event";
 
-function LoginedProfile({ user }) {
+function LoginedProfile({ user, setUser }) {
+  const [error, setError] = useState(null);
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const data = await axios({
+          url: `http://localhost:3002/getMember/${user.userid}`,
+          method: "POST",
+        });
+        setUser(data.data); // -> 객체배열.
+        console.log(data);
+        // console.log(image.data);
+        await new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve();
+          }, 3000);
+        });
+      } catch (e) {
+        setError(e);
+      }
+    };
+    getData();
+  }, [user]);
+
   return (
     <div className="flex-col flex  h-128 Profiles">
       <div className="flex h-3/5 ">
@@ -40,7 +64,7 @@ function LoginedProfile({ user }) {
                     marginLeft: "10px",
                   }}
                 >
-                  0
+                  {user.article}
                 </span>
               </a>
 

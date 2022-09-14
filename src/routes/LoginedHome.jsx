@@ -18,6 +18,7 @@ const LoginedHome = ({
   logined,
   setLogined,
   user,
+  setUser,
 }) => {
   return (
     <div>
@@ -29,7 +30,7 @@ const LoginedHome = ({
         user={user}
       />
       <Layout>
-        <LoginedProfile user={user} />
+        <LoginedProfile user={user} setUser={setUser} />
       </Layout>
       {loginToggle && (
         <Login

@@ -30,6 +30,7 @@ const LoginedHead = ({
             onClick={() => {
               setLogined(!logined);
               onLoginToggle();
+              sessionStorage.setItem("user", "");
             }}
           >
             <a href="#">LogOut</a>

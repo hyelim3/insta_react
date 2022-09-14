@@ -30,6 +30,29 @@ const Grid = () => {
     };
     getImage();
   }, []);
+
+  useEffect(() => {
+    const getImage = async () => {
+      try {
+        const image = await axios({
+          url: "http://localhost:3002/getFiles",
+          method: "GET",
+        });
+        setIsLoading(false);
+        setImages(image.data); // -> 객체배열.
+        // console.log(image.data);
+        await new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve();
+          }, 3000);
+        });
+      } catch (e) {
+        setError(e);
+      }
+    };
+    getImage();
+  }, [images]);
+
   if (error) {
     return <>에러: {error.message}</>;
   }
