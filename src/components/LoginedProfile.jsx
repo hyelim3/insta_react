@@ -15,7 +15,7 @@ function LoginedProfile({ user, setUser }) {
           method: "POST",
         });
         setUser(data.data); // -> 객체배열.
-        console.log(data);
+
         // console.log(image.data);
         await new Promise((resolve, reject) => {
           setTimeout(() => {

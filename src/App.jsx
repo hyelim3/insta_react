@@ -25,8 +25,9 @@ function App() {
   const [logined, setLogined] = useRecoilState(authenticatedState);
   const [error, setError] = useState(null);
   const [user, setUser] = useState(
-    () => JSON.parse(sessionStorage.getItem("user")) || "" //sessionStorage 브라우저 꺼지면 사라짐, 임시저장소, localStorage 자동로그인
+    () => JSON.parse(sessionStorage.getItem("user")) || ""
   );
+  //sessionStorage 브라우저 꺼지면 사라짐, 임시저장소, localStorage 자동로그인
   // const [images, setImages] = useState([]);
 
   //회원가입_Join
@@ -64,9 +65,9 @@ function App() {
       setLogined(data.data.authenticated); //객체 -> 배열 ->
       onLoginToggle();
 
-      setUser(data.data.user); //모든 걸 다가짐
       sessionStorage.setItem("user", JSON.stringify(data.data.user));
-      console.log(data.data.authenticated);
+      setUser(data.data.user); //모든 걸 다가짐
+      // console.log(data.data.authenticated);
     } catch (e) {
       console.log("에러");
       setError(e);

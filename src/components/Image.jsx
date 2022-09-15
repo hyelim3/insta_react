@@ -5,6 +5,7 @@ const BASE_URL = "http://localhost:3002";
 
 const Image = ({ images, setImages, user }) => {
   const [content, setContent] = useState("");
+
   const [uploadedImg, setUploadedImg] = useState({
     fileName: "",
     fillPath: "",
@@ -41,10 +42,10 @@ const Image = ({ images, setImages, user }) => {
       <form
         onSubmit={onSubmit}
         style={{
-          display: "inline-block",
+          display: "inline-block ",
         }}
       >
-        <div id="uploadDiv">
+        <div id="uploadDiv ">
           <input
             id="fileAdd"
             type="file"

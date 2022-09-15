@@ -4,8 +4,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import { AiOutlineMinusCircle } from "react-icons/ai";
 
-const Grid = () => {
+const Grid = ({ user }) => {
   const [images, setImages] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -60,6 +61,23 @@ const Grid = () => {
     return <>Loading...</>;
   }
   // let a = images[0].imgSrc;
+
+  const onRemove = async (id) => {
+    try {
+      await axios({
+        url: `http://localhost:3002/delete/${user.id}`,
+        method: "DELETE",
+      });
+      const data = await axios({
+        url: `http://localhost:3002/getMember`,
+        method: "GET",
+      });
+      setImages(data.data);
+    } catch (e) {
+      setError(e);
+    }
+  };
+
   return (
     <div>
       <section className="mx-auto con section-2">
