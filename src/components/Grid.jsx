@@ -6,10 +6,13 @@ import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { AiOutlineMinusCircle } from "react-icons/ai";
 
-const Grid = ({ user }) => {
+const Grid = ({ user, onRemove }) => {
   const [images, setImages] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [deleteToggle, setDeleteToggle] = useState(false);
+  const [selectedImage, setSelectedImage] = useState("");
+
   useEffect(() => {
     const getImage = async () => {
       try {
@@ -36,7 +39,7 @@ const Grid = ({ user }) => {
     const getImage = async () => {
       try {
         const image = await axios({
-          url: "http://localhost:3002/getFiles",
+          url: `http://localhost:3002/getFiles/${user.userid}`,
           method: "GET",
         });
         setIsLoading(false);
@@ -60,30 +63,23 @@ const Grid = ({ user }) => {
   if (isLoading) {
     return <>Loading...</>;
   }
-  // let a = images[0].imgSrc;
 
-  const onRemove = async (id) => {
-    try {
-      await axios({
-        url: `http://localhost:3002/delete/${user.id}`,
-        method: "DELETE",
-      });
-      const data = await axios({
-        url: `http://localhost:3002/getMember`,
-        method: "GET",
-      });
-      setImages(data.data);
-    } catch (e) {
-      setError(e);
-    }
+  const onDeleteToggle = () => {
+    setDeleteToggle(!deleteToggle);
   };
 
   return (
     <div>
-      <section className="mx-auto con section-2">
+      <section className="mx-auto con section-2 relative">
         <ul className="list-box grid grid-cols-3 gap-2 sm:gap-2 md:gap-3 lg:gap-4">
           {images.map((image, index) => (
-            <li key={index}>
+            <li
+              key={index}
+              onClick={() => {
+                onDeleteToggle();
+                setSelectedImage(image.id);
+              }}
+            >
               <div>
                 <img src={image.imgSrc} />
               </div>
@@ -91,6 +87,24 @@ const Grid = ({ user }) => {
           ))}
         </ul>
       </section>
+      {deleteToggle && (
+        <div className="card bg-base-100 shadow-xl deleteBox">
+          <div className="card-body">
+            <h2 className="card-title">해당 게시물을 정말 삭제하시겠습니까?</h2>
+            <div className="card-actions justify-end">
+              <button
+                className="btn btn-primary"
+                onClick={async () => {
+                  onRemove(selectedImage);
+                  onDeleteToggle();
+                }}
+              >
+                네
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
   //   <div>

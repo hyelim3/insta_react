@@ -19,6 +19,7 @@ const LoginedHome = ({
   setLogined,
   user,
   setUser,
+  onRemove,
 }) => {
   return (
     <div>
@@ -42,7 +43,7 @@ const LoginedHome = ({
         />
       )}
       <Image user={user} />
-      <Grid user={user} />
+      <Grid user={user} onRemove={onRemove} />
     </div>
   );
 };

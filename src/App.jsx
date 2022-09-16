@@ -24,6 +24,8 @@ function App() {
   const [loginToggle, setLoginToggle] = useState(false);
   const [logined, setLogined] = useRecoilState(authenticatedState);
   const [error, setError] = useState(null);
+  const [images, setImages] = useState([]);
+  const [content, setContent] = useState("");
   const [user, setUser] = useState(
     () => JSON.parse(sessionStorage.getItem("user")) || ""
   );
@@ -74,6 +76,17 @@ function App() {
     }
   };
 
+  const onRemove = async (id) => {
+    try {
+      await axios({
+        url: `http://localhost:3002/delete?id=${id}&userid=${user.userid}`,
+        method: "DELETE",
+      });
+    } catch (e) {
+      setError(e);
+    }
+  };
+
   return (
     //https://velog.io/@jjhstoday/AWS-EC2%EC%97%90-React-Node.js-%EC%95%B1-%EB%B0%B0%ED%8F%AC%ED%95%98%EA%B8%B0-1-AWS-EC2-instance-%EC%83%9D%EC%84%B1
     // AWS React 연결 블로그
@@ -93,6 +106,7 @@ function App() {
                   setLogined={setLogined}
                   user={user}
                   setUser={setUser}
+                  onRemove={onRemove}
                 />
               }
             />
