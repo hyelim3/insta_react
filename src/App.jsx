@@ -30,7 +30,9 @@ function App() {
     () => JSON.parse(sessionStorage.getItem("user")) || ""
   );
   //sessionStorage 브라우저 꺼지면 사라짐, 임시저장소, localStorage 자동로그인
-  // const [images, setImages] = useState([]);
+
+  const [follow, setFollow] = useState("");
+  const [follower, setFollower] = useState("");
 
   //회원가입_Join
   const joinmember = async (phonenumber, name, id, pass) => {
@@ -57,6 +59,7 @@ function App() {
 
   //로그인
   const onLogin = async (idValue, passValue) => {
+    setUser(""); //로그인할때 이전거 없앰
     try {
       const data = await axios({
         url: `http://localhost:3002/loginmember`,
@@ -87,6 +90,17 @@ function App() {
     }
   };
 
+  const onFollow = async (reqId, resId) => {
+    try {
+      await axios({
+        url: `http://localhost:3002/follow?reqId=${reqId}&resId=${resId}`,
+        method: "GET",
+      });
+    } catch (e) {
+      setError(e);
+    }
+  };
+
   return (
     //https://velog.io/@jjhstoday/AWS-EC2%EC%97%90-React-Node.js-%EC%95%B1-%EB%B0%B0%ED%8F%AC%ED%95%98%EA%B8%B0-1-AWS-EC2-instance-%EC%83%9D%EC%84%B1
     // AWS React 연결 블로그
@@ -95,7 +109,7 @@ function App() {
         <Router>
           <Routes>
             <Route
-              path="/"
+              path="/:userid"
               element={
                 <LoginedHome
                   onLoginToggle={onLoginToggle}
@@ -107,6 +121,7 @@ function App() {
                   user={user}
                   setUser={setUser}
                   onRemove={onRemove}
+                  onFollow={onFollow}
                 />
               }
             />
@@ -118,7 +133,7 @@ function App() {
         <Router>
           <Routes>
             <Route
-              path="/"
+              path="/:welcome"
               element={
                 <Welcome
                   onLogin={onLogin}
@@ -126,12 +141,19 @@ function App() {
                   setLogined={setLogined}
                   onLoginToggle={onLoginToggle}
                 />
-                //   <UnLoginedHome
-                //   onLoginToggle={onLoginToggle}
-                //   setLoginToggle={setLoginToggle}
-                //   onLogin={onLogin}
-                //   loginToggle={loginToggle}
-                // />
+              }
+            />
+            <Route
+              path="/:userid"
+              element={
+                <UnLoginedHome
+                  onLoginToggle={onLoginToggle}
+                  setLoginToggle={setLoginToggle}
+                  onLogin={onLogin}
+                  loginToggle={loginToggle}
+                  user={user}
+                  setUser={setUser}
+                />
               }
             />
             <Route path="/about" element={<About />} />

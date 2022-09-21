@@ -3,9 +3,10 @@ import "../styles/Login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import Logo from "../public/Logo.PNG";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LoginedHead from "./LoginedHead";
 import LoginedHome from "../routes/LoginedHome";
+
 // $ npm i @fortawesome/fontawesome-svg-core
 // $ npm i @fortawesome/free-solid-svg-icons @fortawesome/free-regular-svg-icons @fortawesome/free-brands-svg-icons
 // $ npm i @fortawesome/react-fontawesome 폰트어썸사용법
@@ -18,6 +19,11 @@ import LoginedHome from "../routes/LoginedHome";
 const Login = ({ onLoginToggle, setLoginToggle, onLogin }) => {
   const [idValue, setIdValue] = useState("");
   const [passValue, setPassValue] = useState("");
+
+  const navigate = useNavigate();
+  const onMoveHomepage = () => {
+    navigate(`/${idValue}`);
+  };
 
   const onIdChange = (e) => {
     setIdValue(e.target.value);
@@ -59,6 +65,7 @@ const Login = ({ onLoginToggle, setLoginToggle, onLogin }) => {
           onClick={() => {
             onLogin(idValue, passValue);
             onLoginToggle(false);
+            onMoveHomepage();
           }}
         >
           로그인

@@ -9,6 +9,7 @@ import Login from "../components/Login";
 import LoginedHead from "../components/LoginedHead";
 import LoginedProfile from "../components/LoginedProfile";
 import Layout from "../layouts/Layout";
+import { useParams } from "react-router-dom";
 
 const LoginedHome = ({
   onLoginToggle,
@@ -20,7 +21,9 @@ const LoginedHome = ({
   user,
   setUser,
   onRemove,
+  onFollow,
 }) => {
+  const { userid } = useParams();
   return (
     <div>
       <LoginedHead
@@ -31,7 +34,12 @@ const LoginedHome = ({
         user={user}
       />
       <Layout>
-        <LoginedProfile user={user} setUser={setUser} />
+        <LoginedProfile
+          user={user}
+          setUser={setUser}
+          userid={userid}
+          onFollow={onFollow}
+        />
       </Layout>
       {loginToggle && (
         <Login

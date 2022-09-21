@@ -28,7 +28,8 @@ const UnLoginedHome = ({
         setLogined={setLogined}
       />
       <Layout>
-        <UnLoginedProfile />
+        <UnLoginedProfile
+         />
       </Layout>
       {loginToggle && (
         <Login

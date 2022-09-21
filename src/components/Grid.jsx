@@ -88,7 +88,7 @@ const Grid = ({ user, onRemove }) => {
         </ul>
       </section>
       {deleteToggle && (
-        <div className="card bg-base-100 shadow-xl deleteBox">
+        <div className="bg-base-100 shadow-xl deleteBox">
           <div className="card-body">
             <h2 className="card-title">해당 게시물을 정말 삭제하시겠습니까?</h2>
             <div className="card-actions justify-end">
