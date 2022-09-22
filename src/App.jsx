@@ -57,6 +57,11 @@ function App() {
     setLoginToggle(false); //로그인 안뜬다!!!!!
   };
 
+  const [addToggle, setAddToggle] = useState(false);
+  const onAddToggle = () => {
+    setAddToggle(!addToggle);
+  };
+
   //로그인
   const onLogin = async (idValue, passValue) => {
     setUser(""); //로그인할때 이전거 없앰
@@ -122,6 +127,8 @@ function App() {
                   setUser={setUser}
                   onRemove={onRemove}
                   onFollow={onFollow}
+                  addToggle={addToggle}
+                  onAddToggle={onAddToggle}
                 />
               }
             />
@@ -133,7 +140,7 @@ function App() {
         <Router>
           <Routes>
             <Route
-              path="/:welcome"
+              path="/"
               element={
                 <Welcome
                   onLogin={onLogin}

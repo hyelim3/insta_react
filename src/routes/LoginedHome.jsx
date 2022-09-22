@@ -22,6 +22,8 @@ const LoginedHome = ({
   setUser,
   onRemove,
   onFollow,
+  addToggle,
+  onAddToggle,
 }) => {
   const { userid } = useParams();
   return (
@@ -32,7 +34,9 @@ const LoginedHome = ({
         logined={logined}
         setLogined={setLogined}
         user={user}
+        onAddToggle={onAddToggle}
       />
+      {addToggle && <Image />}
       <Layout>
         <LoginedProfile
           user={user}
@@ -50,7 +54,7 @@ const LoginedHome = ({
           setLogined={setLogined}
         />
       )}
-      <Image user={user} />
+
       <Grid user={user} onRemove={onRemove} />
     </div>
   );

@@ -30,8 +30,69 @@ function LoginedProfile({ user, setUser, userid, onFollow }) {
     getData();
   }, [user]);
 
+  const [content, setContent] = useState("");
+
+  const [uploadedImg, setUploadedImg] = useState({
+    fileName: "",
+    fillPath: "",
+  });
+
+  const fileAdd = () => {
+    let file = document.getElementById("fileAdd");
+    file.click();
+  };
+
+  const onChange = (e) => {
+    setContent(e.target.files[0]);
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (content == "" || content == undefined || content == null) {
+      window.alert("사진 파일을 선택 후 변경 버튼을 눌러주세요");
+      return;
+    }
+    const formData = new FormData();
+    formData.append("img", content);
+    axios
+      .post(`http://localhost:3002/upload/${user.userid}`, formData)
+      .then((res) => {
+        const { fileName } = res.data;
+
+        setUploadedImg({ fileName });
+        alert("업로드완료");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
   return userinfo.userid === user.userid ? (
     <div className="flex-col flex  h-128 Profiles">
+      <div>
+        <form
+          onSubmit={onSubmit}
+          style={{
+            display: "inline-block ",
+          }}
+        >
+          <div id="uploadDiv ">
+            <input
+              id="fileAdd"
+              type="file"
+              onChange={onChange}
+              style={{
+                cursor: "pointer",
+              }}
+            />
+          </div>
+          <input
+            type="submit"
+            value="Upload"
+            className="btn"
+            onClick={() => {}}
+          />
+        </form>
+      </div>
       <div className="flex h-3/5 ">
         <div className="flex justify-center items-center w-1/3 ">
           <div className="avatar">

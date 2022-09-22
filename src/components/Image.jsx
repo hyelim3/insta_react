@@ -5,7 +5,7 @@ const BASE_URL = "http://localhost:3002";
 
 const Image = ({ images, setImages, user }) => {
   const [content, setContent] = useState("");
-
+  const userinfo = JSON.parse(sessionStorage.getItem("user")) || ""; //현재로그인한 아이
   const [uploadedImg, setUploadedImg] = useState({
     fileName: "",
     fillPath: "",
@@ -22,10 +22,14 @@ const Image = ({ images, setImages, user }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    if (content == "" || content == undefined || content == null) {
+      window.alert("사진 파일을 선택 후 변경 버튼을 눌러주세요");
+      return;
+    }
     const formData = new FormData();
     formData.append("img", content);
     axios
-      .post(`http://localhost:3002/upload/${user.userid}`, formData)
+      .post(`http://localhost:3002/upload/${userinfo.userid}`, formData)
       .then((res) => {
         const { fileName } = res.data;
 
@@ -43,6 +47,10 @@ const Image = ({ images, setImages, user }) => {
         onSubmit={onSubmit}
         style={{
           display: "inline-block ",
+
+          position: "absolute",
+          left: "50%",
+          marginTop: "5px",
         }}
       >
         <div id="uploadDiv ">
@@ -57,7 +65,7 @@ const Image = ({ images, setImages, user }) => {
         </div>
         <input
           type="submit"
-          value="Upload"
+          value="업로드"
           className="btn"
           onClick={() => {}}
         />

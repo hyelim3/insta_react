@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import "../styles/Head.css";
 import { FiLogIn, FiLogOut } from "react-icons/fi";
@@ -12,6 +12,7 @@ const LoginedHead = ({
   logined,
   setLogined,
   user, //현재 라우터
+  onAddToggle,
 }) => {
   const userinfo = JSON.parse(sessionStorage.getItem("user")) || ""; //현재로그인한 아이
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ const LoginedHead = ({
           </a>
         </div>
         <div className="flex-none gap-2 text-xl">
-          <a href="#">
+          <a href={userinfo.userid}>
             {/* home */}
             <BiHomeAlt />
           </a>
@@ -40,9 +41,13 @@ const LoginedHead = ({
             {/* DM */}
             <FiSend />
           </a>
-          <a href="#">
+          <button
+            onClick={() => {
+              onAddToggle();
+            }}
+          >
             <GrAdd />
-          </a>
+          </button>
           {/* <button>
             <a href="#">SEARCH</a>
           </button> */}
@@ -114,7 +119,7 @@ const LoginedHead = ({
           </a>
         </div>
         <div className="flex-none gap-2 text-xl">
-          <a href="#">
+          <a href={userinfo.userid}>
             {/* home */}
             <BiHomeAlt />
           </a>
