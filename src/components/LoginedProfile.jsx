@@ -4,10 +4,12 @@ import "../styles/Loginedprofile.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import userEvent from "@testing-library/user-event";
+import { FiMoreHorizontal } from "react-icons/fi";
 
-function LoginedProfile({ user, setUser, userid, onFollow }) {
+function LoginedProfile({ user, setUser, userid, onFollow, onProfileToggle }) {
   const [error, setError] = useState(null);
   const userinfo = JSON.parse(sessionStorage.getItem("user")) || ""; //현재로그인한 아이
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -112,9 +114,64 @@ function LoginedProfile({ user, setUser, userid, onFollow }) {
             <button className="rounded-md border-gray-400 bg-white text-black hover:bg-white text-black hover:rounded-md hover:border-gray-400 btn btn-sm mt-2 mr-4">
               팔로우
             </button>
-            <button className="mr-auto flex justify mt-4">
-              <i className="fi fi-bs-menu-dots"></i>
-            </button>
+            {/* <button
+              onClick={() => {
+                onProfileToggle();
+              }}
+            ></button>
+            {onProfileToggle && ( */}
+            <div>
+              <a href="#my-modal-2">
+                <FiMoreHorizontal />
+              </a>
+              <div className="modal" id="my-modal-2">
+                <div className="hero flex items-center justify-center min-h-screen absolute top-0">
+                  <div className="hero-content flex-col lg:flex-row-reverse">
+                    <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+                      <div className="card-body">
+                        <div className="form-control mt-5">
+                          <button
+                            type="submit"
+                            onClick={onSubmit}
+                            className="btn btn-ghost"
+                          >
+                            프로필 사진 바꾸기
+                          </button>
+                        </div>
+                        <div className="form-control">
+                          <label className="label">
+                            <span className="label-text">이름</span>
+                          </label>
+                          <input
+                            placeholder="자신을 소개해보세요."
+                            className="input input-bordered"
+                          />
+                        </div>
+                        <div className="form-control">
+                          <label className="label">
+                            <span className="label-text">소개</span>
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="소개글"
+                            className="input input-bordered"
+                          />
+                        </div>
+                        <div className="form-control mt-5">
+                          <button
+                            // type="submit"
+                            // onClick={onSubmit}
+                            className="btn btn-primary bg-indigo-400"
+                          >
+                            프로필 수정
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="h-1/5">
@@ -154,7 +211,7 @@ function LoginedProfile({ user, setUser, userid, onFollow }) {
           </div>
           <div className="h-2/5">
             <div className=" font-bold m-0 py-1">풀스택 A조</div>
-            <div className=" py-1">instagram</div>
+            <div className=" py-1">안녕하세요!</div>
             <div className="font-bold text-blue-900 mt-1">
               <a href="https://github.com/hyelim3">github.com/hyelim3</a>
             </div>

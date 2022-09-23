@@ -156,8 +156,8 @@ const Grid = ({ user, onRemove }) => {
                       width: "100px",
                       gap: "10px",
                     }}
-                    data-aos="fade-left"
-                    //움직임, 애니메이션 효과
+                    // data-aos="fade-left"
+                    // //움직임, 애니메이션 효과
                   >
                     <button>수정</button>
                     <button

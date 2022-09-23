@@ -24,6 +24,7 @@ const LoginedHome = ({
   onFollow,
   addToggle,
   onAddToggle,
+  // onProfileToggle,
 }) => {
   const { userid } = useParams();
   return (
@@ -43,6 +44,7 @@ const LoginedHome = ({
           setUser={setUser}
           userid={userid}
           onFollow={onFollow}
+          // onProfileToggle={onProfileToggle}
         />
       </Layout>
       {loginToggle && (

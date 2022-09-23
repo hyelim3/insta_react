@@ -62,6 +62,11 @@ function App() {
     setAddToggle(!addToggle);
   };
 
+  // const [profileToggle, setProfileToggle] = useState(false);
+  // const onProfileToggle = () => {
+  //   setProfileToggle(!profileToggle);
+  // };
+
   //로그인
   const onLogin = async (idValue, passValue) => {
     setUser(""); //로그인할때 이전거 없앰
@@ -129,6 +134,7 @@ function App() {
                   onFollow={onFollow}
                   addToggle={addToggle}
                   onAddToggle={onAddToggle}
+                  // onProfileToggle={onProfileToggle}
                 />
               }
             />
