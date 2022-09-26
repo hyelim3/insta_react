@@ -5,10 +5,27 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import userEvent from "@testing-library/user-event";
 import { FiMoreHorizontal } from "react-icons/fi";
+import { FaWindowClose } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { GrFormClose } from "react-icons/gr";
 
 function LoginedProfile({ user, setUser, userid, onFollow, onProfileToggle }) {
   const [error, setError] = useState(null);
   const userinfo = JSON.parse(sessionStorage.getItem("user")) || ""; //현재로그인한 아이
+  const navigate = useNavigate();
+  const onMoveHomepage = () => {
+    navigate(-1);
+  };
+
+  const [usename, setUseName] = useState("");
+  const [introduce, setIntroduce] = useState("");
+  const onChangeUsename = (e) => {
+    setUseName(e.target.value);
+  };
+
+  const onChangeIntroduce = (e) => {
+    setIntroduce(e.target.value);
+  };
 
   useEffect(() => {
     const getData = async () => {
@@ -31,6 +48,14 @@ function LoginedProfile({ user, setUser, userid, onFollow, onProfileToggle }) {
     };
     getData();
   }, [user]);
+
+  useEffect(() => {
+    setUseName(userinfo.usename);
+  }, []);
+
+  useEffect(() => {
+    setIntroduce(userinfo.introduce);
+  }, []);
 
   const [content, setContent] = useState("");
 
@@ -68,6 +93,7 @@ function LoginedProfile({ user, setUser, userid, onFollow, onProfileToggle }) {
         console.error(err);
       });
   };
+
   return userinfo.userid === user.userid ? (
     <div className="flex-col flex  h-128 Profiles">
       <div>
@@ -121,10 +147,10 @@ function LoginedProfile({ user, setUser, userid, onFollow, onProfileToggle }) {
             ></button>
             {onProfileToggle && ( */}
             <div>
-              <a href="#my-modal-2">
+              <a href="#update">
                 <FiMoreHorizontal />
               </a>
-              <div className="modal" id="my-modal-2">
+              <div className="modal" id="update">
                 <div className="hero flex items-center justify-center min-h-screen absolute top-0">
                   <div className="hero-content flex-col lg:flex-row-reverse">
                     <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
@@ -143,8 +169,10 @@ function LoginedProfile({ user, setUser, userid, onFollow, onProfileToggle }) {
                             <span className="label-text">이름</span>
                           </label>
                           <input
-                            placeholder="자신을 소개해보세요."
+                            placeholder="이름을 입력해주세요."
                             className="input input-bordered"
+                            onChange={onChangeUsename}
+                            value={usename}
                           />
                         </div>
                         <div className="form-control">
@@ -155,17 +183,35 @@ function LoginedProfile({ user, setUser, userid, onFollow, onProfileToggle }) {
                             type="text"
                             placeholder="소개글"
                             className="input input-bordered"
+                            onChange={onChangeIntroduce}
+                            value={introduce}
                           />
                         </div>
                         <div className="form-control mt-5">
                           <button
                             // type="submit"
                             // onClick={onSubmit}
-                            className="btn btn-primary bg-indigo-400"
+                            className="btn btn-primary bg-indigo-600"
                           >
                             프로필 수정
                           </button>
                         </div>
+                        <button
+                          onClick={() => {
+                            onMoveHomepage();
+                          }}
+                        >
+                          <GrFormClose
+                            style={{
+                              position: "absolute",
+                              right: "0",
+                              top: "-1",
+                              fontSize: "1.5rem",
+                              color: "black",
+                              cursor: "pointer",
+                            }}
+                          />
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -210,11 +256,11 @@ function LoginedProfile({ user, setUser, userid, onFollow, onProfileToggle }) {
             </div>
           </div>
           <div className="h-2/5">
-            <div className=" font-bold m-0 py-1">풀스택 A조</div>
-            <div className=" py-1">안녕하세요!</div>
-            <div className="font-bold text-blue-900 mt-1">
-              <a href="https://github.com/hyelim3">github.com/hyelim3</a>
+            <div className="font-bold text-blue-900 mt-3">
+              {/* <a href="https://github.com/hyelim3">github.com/hyelim3</a> */}
             </div>
+            <div className=" font-bold m-0 py-1">{userinfo.usename}</div>
+            <div className=" py-1">{userinfo.introduce}</div>
           </div>
         </div>
       </div>
