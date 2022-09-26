@@ -17,7 +17,7 @@ const LoginedHead = ({
   const userinfo = JSON.parse(sessionStorage.getItem("user")) || ""; //현재로그인한 아이
   const navigate = useNavigate();
   const onMoveHomepage = () => {
-    navigate("/welcome");
+    navigate("/");
   };
 
   return userinfo.userid === user.userid ? (

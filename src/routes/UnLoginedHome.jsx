@@ -10,6 +10,8 @@ import UnLoginedHead from "../components/UnLoginedHead";
 import LoginedProfile from "../components/LoginedProfile";
 import UnLoginedProfile from "../components/UnLoginedProfile";
 import Layout from "../layouts/Layout";
+import { useParams } from "react-router-dom";
+import UnLoginedGrid from "../components/UnLoginedGrid";
 
 const UnLoginedHome = ({
   onLoginToggle,
@@ -18,7 +20,10 @@ const UnLoginedHome = ({
   onLogin,
   logined,
   setLogined,
+  user,
+  setUser,
 }) => {
+  const { userid } = useParams();
   return (
     <div>
       <UnLoginedHead //로그인이 안됐음
@@ -29,7 +34,13 @@ const UnLoginedHome = ({
       />
       <Layout>
         <UnLoginedProfile
-         />
+          // loginde={logined}
+          // setLogined={setLogined}
+          usreid={userid}
+          user={user}
+          setUser={setUser}
+          userid={userid}
+        />
       </Layout>
       {loginToggle && (
         <Login
@@ -40,8 +51,12 @@ const UnLoginedHome = ({
           setLogined={setLogined}
         />
       )}
-      <Image />
-      <Grid />
+      <UnLoginedGrid
+        logined={logined}
+        setLogined={setLogined}
+        user={user}
+        userid={userid}
+      />
     </div>
   );
 };

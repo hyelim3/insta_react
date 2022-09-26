@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import "../styles/Head.css";
+import { FiLogIn } from "react-icons/fi";
+import { GrAdd } from "react-icons/gr";
+import { FiSend } from "react-icons/fi";
+import { BiHomeAlt } from "react-icons/bi";
+
 const UnLoginedHead = ({
   setLoginToggle,
   onLoginToggle,
   logined,
   setLogined,
 }) => {
+  const userinfo = JSON.parse(sessionStorage.getItem("user")) || ""; //현재로그인한 아이
   return (
     <div className="Topbar">
       <div className="navbar bg-base-100 Topbar_logo">
@@ -17,20 +24,33 @@ const UnLoginedHead = ({
             instargram
           </a>
         </div>
-        <div className="flex-none gap-2">
-          <a href="#">HOME</a>
-          <a href="#">DM</a>
-          <a href="#">ADD</a>
-          <button>
+        <div className="flex-none gap-2 text-xl">
+          <a href={userinfo.userid}>
+            {/* home */}
+            <BiHomeAlt />
+          </a>
+          <a href="#">
+            {/* DM */}
+            <FiSend />
+          </a>
+          {/* <a href="#">
+            <GrAdd />
+          </a> */}
+          {/* <button>
             <a href="#">SEARCH</a>
-          </button>
+          </button> */}
           {/* onClick={()=>{serch()}} */}
           <button
-            onClick={() => {
-              onLoginToggle();
-            }}
+          // onClick={() => {
+          //   setLogined(!logined);
+          //   onLoginToggle();
+          //   sessionStorage.clear();
+          //   onMoveHomepage();
+          // }}
           >
-            <a href="#">Login</a>
+            <a href="/">
+              <FiLogIn />
+            </a>
           </button>
           <div className="form-control">
             <input
@@ -42,7 +62,7 @@ const UnLoginedHead = ({
           <div className="dropdown dropdown-end">
             <label tabIndex="0" className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
-                <img src="https://placeimg.com/80/80/people" />
+                <img src={userinfo.imgSrc} />
               </div>
             </label>
             <ul

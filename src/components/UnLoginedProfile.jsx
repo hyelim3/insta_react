@@ -1,30 +1,63 @@
-import React from "react";
 import "../styles/UnLoginedprofile.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import userEvent from "@testing-library/user-event";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { FiMoreHorizontal } from "react-icons/fi";
 
-function UnLoginedProfile({ user }) {
+function UnLoginedProfile({ userid, user, setUser }) {
+  const [error, setError] = useState(null);
+
+  const userinfo = JSON.parse(sessionStorage.getItem("user")) || ""; //현재로그인한 아이
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const data = await axios({
+          url: `http://localhost:3002/getMember/${userid}`,
+          method: "POST",
+        });
+        setUser(data.data); // -> 객체배열.
+
+        // console.log(image.data);
+        await new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve();
+          }, 3000);
+        });
+      } catch (e) {
+        setError(e);
+      }
+    };
+    getData();
+  }, [user]);
+
   return (
     <div className="flex-col flex  h-128 Profiles">
       <div className="flex h-3/5 ">
         <div className="flex justify-center items-center w-1/3 ">
           <div className="avatar">
             <div className="w-40 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-              <img
-                src="https://i.picsum.photos/id/10/2500/1667.jpg?hmac=J04WWC_ebchx3WwzbM-Z4_KC_LeLBWr5LZMaAkWkF68"
-                alt=""
-              />
+              <img src={user.imgSrc} alt="" />
             </div>
           </div>
         </div>
         <div className="w-2/3 ">
           <div className="flex justify-end items-center h-2/5">
-            <div className="text-2xl font-light mr-auto mt-2">SBS07</div>
+            <div className="text-2xl font-light mr-auto mt-2">
+              {user.username}님
+            </div>
             <button className="rounded-md border-gray-400 bg-white text-black hover:bg-white text-black hover:rounded-md hover:border-gray-400 btn btn-sm mt-2 mr-4">
               메시지 보내기
             </button>
-            <button className="rounded-md border-gray-400 bg-white text-black hover:bg-white text-black hover:rounded-md hover:border-gray-400 btn btn-sm mt-2 mr-4">
+            <button
+              className="rounded-md border-gray-400 bg-white text-black hover:bg-white text-black hover:rounded-md hover:border-gray-400 btn btn-sm mt-2 mr-4"
+              // onClick={() => {
+              //   alert("팔로우를 하시겠습니까?");
+              //   onFollow(userinfo.userid, user.userid);
+              // }}
+            >
               팔로우
             </button>
             <button className="mr-auto flex justify mt-4">
@@ -41,7 +74,7 @@ function UnLoginedProfile({ user }) {
                     marginLeft: "10px",
                   }}
                 >
-                  0
+                  {user.article}
                 </span>
               </a>
 
@@ -52,7 +85,7 @@ function UnLoginedProfile({ user }) {
                     marginLeft: "10px",
                   }}
                 >
-                  0
+                  {user.follower}
                 </span>
               </a>
               <a href="" className="mr-20">
@@ -62,7 +95,7 @@ function UnLoginedProfile({ user }) {
                     marginLeft: "10px",
                   }}
                 >
-                  0
+                  {user.follow}
                 </span>
               </a>
             </div>
