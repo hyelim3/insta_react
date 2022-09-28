@@ -12,7 +12,6 @@ const Join = ({ joinmember }) => {
 
   const onChangePhonenumber = (e) => {
     setPhonenumber(e.target.value);
-    console.log(phonenumber);
   };
   const onChangeName = (e) => {
     setName(e.target.value);

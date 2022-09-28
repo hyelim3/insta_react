@@ -101,11 +101,11 @@ function UnLoginedProfile({ userid, user, setUser }) {
             </div>
           </div>
           <div className="h-2/5">
-            <div className=" font-bold m-0 py-1">풀스택 A조</div>
-            <div className=" py-1">instagram</div>
-            <div className="font-bold text-blue-900 mt-1">
-              <a href="https://github.com/hyelim3">github.com/hyelim3</a>
+            <div className="font-bold text-blue-900 mt-3">
+              {/* <a href="https://github.com/hyelim3">github.com/hyelim3</a> */}
             </div>
+            <div className=" font-bold m-0 py-1">{user.usename}</div>
+            <div className=" py-1">{user.introduce}</div>
           </div>
         </div>
       </div>

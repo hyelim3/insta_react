@@ -9,7 +9,7 @@ import { AiOutlineMinusCircle } from "react-icons/ai";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-const Grid = ({ user, onRemove }) => {
+const Grid = ({ user, onRemove, userid }) => {
   const [images, setImages] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -23,27 +23,6 @@ const Grid = ({ user, onRemove }) => {
   useEffect(() => {
     AOS.init();
   });
-  useEffect(() => {
-    const getImage = async () => {
-      try {
-        const image = await axios({
-          url: "http://localhost:3002/getFiles",
-          method: "GET",
-        });
-        setIsLoading(false);
-        setImages(image.data); // -> 객체배열.
-        // console.log(image.data);
-        await new Promise((resolve, reject) => {
-          setTimeout(() => {
-            resolve();
-          }, 3000);
-        });
-      } catch (e) {
-        setError(e);
-      }
-    };
-    getImage();
-  }, []);
 
   useEffect(() => {
     const getImage = async () => {
@@ -54,18 +33,28 @@ const Grid = ({ user, onRemove }) => {
         });
         setIsLoading(false);
         setImages(image.data); // -> 객체배열.
-        // console.log(image.data);
-        await new Promise((resolve, reject) => {
-          setTimeout(() => {
-            resolve();
-          }, 3000);
-        });
       } catch (e) {
         setError(e);
       }
     };
     getImage();
-  }, [images]);
+  }, []); //[images] 이미지가 바뀌면 리렌더링, 계속 실행이 됨
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const data = await axios({
+          url: `http://localhost:3002/getFiles/${userid}`,
+          method: "POST",
+        });
+
+        setImages(data.data);
+      } catch (e) {
+        setError(e);
+      }
+    };
+    getData();
+  }, []);
 
   if (error) {
     return <>에러: {error.message}</>;

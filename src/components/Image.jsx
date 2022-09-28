@@ -3,7 +3,7 @@ import axios from "axios";
 
 const BASE_URL = "http://localhost:3002";
 
-const Image = ({ images, setImages, user }) => {
+const Image = ({ images, setImages, user, onAddToggle }) => {
   const [content, setContent] = useState("");
   const userinfo = JSON.parse(sessionStorage.getItem("user")) || ""; //현재로그인한 아이
   const [uploadedImg, setUploadedImg] = useState({
@@ -35,6 +35,7 @@ const Image = ({ images, setImages, user }) => {
 
         setUploadedImg({ fileName });
         alert("업로드완료");
+        onAddToggle();
       })
       .catch((err) => {
         console.error(err);

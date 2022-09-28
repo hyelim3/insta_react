@@ -9,24 +9,49 @@ import { FaWindowClose } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { GrFormClose } from "react-icons/gr";
 
-function LoginedProfile({ user, setUser, userid, onFollow, onProfileToggle }) {
+function LoginedProfile({ user, setUser, userid, onFollow }) {
   const [error, setError] = useState(null);
+  const [profileImageToggle, setProfileImageToggle] = useState(false);
   const userinfo = JSON.parse(sessionStorage.getItem("user")) || ""; //현재로그인한 아이
+  const [usename, setUseName] = useState(userinfo.usename);
+  const [introduce, setIntroduce] = useState(userinfo.introduce);
   const navigate = useNavigate();
   const onMoveHomepage = () => {
     navigate(-1);
   };
 
-  const [usename, setUseName] = useState("");
-  const [introduce, setIntroduce] = useState("");
   const onChangeUsename = (e) => {
     setUseName(e.target.value);
   };
-
   const onChangeIntroduce = (e) => {
     setIntroduce(e.target.value);
   };
 
+  const onProfileToggle = () => {
+    setProfileImageToggle(!profileImageToggle);
+  };
+
+  const onUpdate = async (userid, usename, introduce) => {
+    // console.log("userid : ", userid);
+    // console.log("usename :", usename);
+    // console.log("introuduce: ", introduce);
+    try {
+      const data = await axios({
+        url: `http://localhost:3002/updateProfile/${user.userid}`,
+        method: "PATCH",
+        data: {
+          usename,
+          introduce,
+        },
+      });
+      setUser(data.data); //업데이트 된 프로필 불러옴
+      // console.log(data.data);
+    } catch (e) {
+      setError(e);
+    }
+  };
+
+  //바뀐 유저가 불러옴
   useEffect(() => {
     const getData = async () => {
       try {
@@ -35,27 +60,13 @@ function LoginedProfile({ user, setUser, userid, onFollow, onProfileToggle }) {
           method: "POST",
         });
         setUser(data.data); // -> 객체배열.
-
         // console.log(image.data);
-        await new Promise((resolve, reject) => {
-          setTimeout(() => {
-            resolve();
-          }, 3000);
-        });
       } catch (e) {
         setError(e);
       }
     };
     getData();
   }, [user]);
-
-  useEffect(() => {
-    setUseName(userinfo.usename);
-  }, []);
-
-  useEffect(() => {
-    setIntroduce(userinfo.introduce);
-  }, []);
 
   const [content, setContent] = useState("");
 
@@ -75,19 +86,22 @@ function LoginedProfile({ user, setUser, userid, onFollow, onProfileToggle }) {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (content == "" || content == undefined || content == null) {
-      window.alert("사진 파일을 선택 후 변경 버튼을 눌러주세요");
-      return;
-    }
     const formData = new FormData();
     formData.append("img", content);
+    if (content == "" || content == undefined || content == null) {
+      window.alert("사진 파일을 선택 후 변경 버튼을 눌러주세요");
+      console.log("dd");
+      return;
+    }
     axios
-      .post(`http://localhost:3002/upload/${user.userid}`, formData)
+      .post(`http://localhost:3002/profile/${user.userid}`, formData)
       .then((res) => {
         const { fileName } = res.data;
 
         setUploadedImg({ fileName });
         alert("업로드완료");
+        onMoveHomepage();
+        onProfileToggle();
       })
       .catch((err) => {
         console.error(err);
@@ -96,31 +110,6 @@ function LoginedProfile({ user, setUser, userid, onFollow, onProfileToggle }) {
 
   return userinfo.userid === user.userid ? (
     <div className="flex-col flex  h-128 Profiles">
-      <div>
-        <form
-          onSubmit={onSubmit}
-          style={{
-            display: "inline-block ",
-          }}
-        >
-          <div id="uploadDiv ">
-            <input
-              id="fileAdd"
-              type="file"
-              onChange={onChange}
-              style={{
-                cursor: "pointer",
-              }}
-            />
-          </div>
-          <input
-            type="submit"
-            value="Upload"
-            className="btn"
-            onClick={() => {}}
-          />
-        </form>
-      </div>
       <div className="flex h-3/5 ">
         <div className="flex justify-center items-center w-1/3 ">
           <div className="avatar">
@@ -134,12 +123,12 @@ function LoginedProfile({ user, setUser, userid, onFollow, onProfileToggle }) {
             <div className="text-2xl font-light mr-auto mt-2">
               {user.username}님
             </div>
-            <button className="rounded-md border-gray-400 bg-white text-black hover:bg-white text-black hover:rounded-md hover:border-gray-400 btn btn-sm mt-2 mr-4">
+            {/* <button className="rounded-md border-gray-400 bg-white text-black hover:bg-white text-black hover:rounded-md hover:border-gray-400 btn btn-sm mt-2 mr-4">
               메시지 보내기
             </button>
             <button className="rounded-md border-gray-400 bg-white text-black hover:bg-white text-black hover:rounded-md hover:border-gray-400 btn btn-sm mt-2 mr-4">
               팔로우
-            </button>
+            </button> */}
             {/* <button
               onClick={() => {
                 onProfileToggle();
@@ -152,46 +141,91 @@ function LoginedProfile({ user, setUser, userid, onFollow, onProfileToggle }) {
               </a>
               <div className="modal" id="update">
                 <div className="hero flex items-center justify-center min-h-screen absolute top-0">
-                  <div className="hero-content flex-col lg:flex-row-reverse">
+                  {profileImageToggle && (
+                    <div className="card card-compact w-96 bg-base-100 shadow-xl">
+                      {/* <figure>
+                        <img
+                          src="https://placeimg.com/400/225/arch"
+                          alt="Shoes"
+                        />
+                      </figure> */}
+                      <div className="card-body">
+                        <form
+                          onSubmit={onSubmit}
+                          style={{
+                            display: "inline-block",
+                            lineHeight: "2rem",
+                          }}
+                        >
+                          <div id="uploadDiv ">
+                            <input
+                              id="fileAdd"
+                              type="file"
+                              onChange={onChange}
+                              style={{
+                                cursor: "pointer",
+                              }}
+                            />
+                          </div>
+                        </form>
+                        <div className="card-actions justify-end ">
+                          <input
+                            type="submit"
+                            value="Upload"
+                            className="btn"
+                            onClick={onSubmit}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  <div className="hero-content flex-row">
                     <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
                       <div className="card-body">
-                        <div className="form-control mt-5">
+                        <div className="form-control">
                           <button
                             type="submit"
-                            onClick={onSubmit}
+                            onClick={() => {
+                              onProfileToggle();
+                            }}
                             className="btn btn-ghost"
                           >
                             프로필 사진 바꾸기
                           </button>
                         </div>
                         <div className="form-control">
-                          <label className="label">
-                            <span className="label-text">이름</span>
-                          </label>
+                          <span className="label-text">이름</span>
                           <input
+                            style={{
+                              lineHeight: "5rem",
+                            }}
                             placeholder="이름을 입력해주세요."
                             className="input input-bordered"
                             onChange={onChangeUsename}
-                            value={usename}
+                            value={usename || ""}
                           />
                         </div>
                         <div className="form-control">
-                          <label className="label">
-                            <span className="label-text">소개</span>
-                          </label>
+                          <span className="label-text">소개</span>
+
                           <input
+                            style={{
+                              lineHeight: "5rem",
+                            }}
                             type="text"
-                            placeholder="소개글"
+                            placeholder="검색"
                             className="input input-bordered"
                             onChange={onChangeIntroduce}
-                            value={introduce}
+                            value={introduce || ""}
                           />
                         </div>
                         <div className="form-control mt-5">
                           <button
-                            // type="submit"
-                            // onClick={onSubmit}
                             className="btn btn-primary bg-indigo-600"
+                            onClick={() => {
+                              onUpdate(userid, usename, introduce);
+                              onMoveHomepage();
+                            }}
                           >
                             프로필 수정
                           </button>
@@ -199,6 +233,7 @@ function LoginedProfile({ user, setUser, userid, onFollow, onProfileToggle }) {
                         <button
                           onClick={() => {
                             onMoveHomepage();
+                            setProfileImageToggle(false);
                           }}
                         >
                           <GrFormClose
@@ -259,8 +294,8 @@ function LoginedProfile({ user, setUser, userid, onFollow, onProfileToggle }) {
             <div className="font-bold text-blue-900 mt-3">
               {/* <a href="https://github.com/hyelim3">github.com/hyelim3</a> */}
             </div>
-            <div className=" font-bold m-0 py-1">{userinfo.usename}</div>
-            <div className=" py-1">{userinfo.introduce}</div>
+            <div className=" font-bold m-0 py-1">{user.usename}</div>
+            <div className=" py-1">{user.introduce}</div>
           </div>
         </div>
       </div>

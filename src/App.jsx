@@ -31,8 +31,8 @@ function App() {
   );
   //sessionStorage 브라우저 꺼지면 사라짐, 임시저장소, localStorage 자동로그인
 
-  const [follow, setFollow] = useState("");
-  const [follower, setFollower] = useState("");
+  // const [follow, setFollow] = useState("");
+  // const [follower, setFollower] = useState("");
 
   //회원가입_Join
   const joinmember = async (phonenumber, name, id, pass) => {
@@ -61,11 +61,6 @@ function App() {
   const onAddToggle = () => {
     setAddToggle(!addToggle);
   };
-
-  // const [profileToggle, setProfileToggle] = useState(false);
-  // const onProfileToggle = () => {
-  //   setProfileToggle(!profileToggle);
-  // };
 
   //로그인
   const onLogin = async (idValue, passValue) => {
@@ -135,6 +130,7 @@ function App() {
                   addToggle={addToggle}
                   onAddToggle={onAddToggle}
                   // onProfileToggle={onProfileToggle}
+                  // onUpdate={onUpdate}
                 />
               }
             />
