@@ -20,6 +20,9 @@ const LoginedHead = ({
     navigate("/");
   };
 
+  const onImageChange = (e) => {
+    e.preventDefault();
+  };
   return userinfo.userid === user.userid ? (
     //로그인한 사람과 현재 브라우저에 보이는 유저랑 같을 때
     <div className="Topbar">
@@ -75,7 +78,7 @@ const LoginedHead = ({
           <div className="dropdown dropdown-end">
             <label tabIndex="0" className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
-                <img src={userinfo.imgSrc} />
+                <img src={user.imgSrc} onChange={onImageChange} />
               </div>
             </label>
 
@@ -92,9 +95,7 @@ const LoginedHead = ({
                   <span className="badge">New</span>
                 </a>
               </li>
-              <li>
-                <a>저장됨</a>
-              </li>
+
               <li>
                 <a>설정</a>
               </li>
@@ -171,9 +172,6 @@ const LoginedHead = ({
                   프로필
                   <span className="badge">New</span>
                 </a>
-              </li>
-              <li>
-                <a>저장됨</a>
               </li>
               <li>
                 <a>설정</a>

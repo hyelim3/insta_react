@@ -4,7 +4,7 @@ import "../styles/Loginedprofile.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import userEvent from "@testing-library/user-event";
-import { FiMoreHorizontal } from "react-icons/fi";
+import { FiDivideSquare, FiMoreHorizontal } from "react-icons/fi";
 import { FaWindowClose } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { GrFormClose } from "react-icons/gr";
@@ -15,6 +15,7 @@ function LoginedProfile({ user, setUser, userid, onFollow }) {
   const userinfo = JSON.parse(sessionStorage.getItem("user")) || ""; //현재로그인한 아이
   const [usename, setUseName] = useState(userinfo.usename);
   const [introduce, setIntroduce] = useState(userinfo.introduce);
+  const [imgSrc, setImgSrc] = useState(user.imgSrc);
   const navigate = useNavigate();
   const onMoveHomepage = () => {
     navigate(-1);
@@ -68,6 +69,20 @@ function LoginedProfile({ user, setUser, userid, onFollow }) {
     getData();
   }, [user]);
 
+  const onImageHead = async () => {
+    try {
+      const data = await axios({
+        url: `http://localhost:3002/getMember/${userid}`,
+        method: "POST",
+      });
+      sessionStorage.setItem("user", JSON.stringify(data.data));
+      setUser(data.data);
+      setImgSrc(data.data.imgSrc);
+    } catch (e) {
+      setError(e);
+    }
+  };
+
   const [content, setContent] = useState("");
 
   const [uploadedImg, setUploadedImg] = useState({
@@ -99,7 +114,7 @@ function LoginedProfile({ user, setUser, userid, onFollow }) {
         const { fileName } = res.data;
 
         setUploadedImg({ fileName });
-        alert("업로드완료");
+        onImageHead();
         onMoveHomepage();
         onProfileToggle();
       })
@@ -365,8 +380,10 @@ function LoginedProfile({ user, setUser, userid, onFollow }) {
             <button
               className="rounded-md border-gray-400 bg-white text-black hover:bg-white text-black hover:rounded-md hover:border-gray-400 btn btn-sm mt-2 mr-4"
               onClick={() => {
-                alert("팔로우를 하시겠습니까?");
-                onFollow(userinfo.userid, user.userid);
+                //예, 아니요 창이 나옴
+                if (window.confirm("팔로우를 하시겠습니까?")) {
+                  onFollow(userinfo.userid, user.userid);
+                }
               }}
             >
               팔로우
@@ -412,11 +429,11 @@ function LoginedProfile({ user, setUser, userid, onFollow }) {
             </div>
           </div>
           <div className="h-2/5">
-            <div className=" font-bold m-0 py-1">풀스택 A조</div>
-            <div className=" py-1">instagram</div>
-            <div className="font-bold text-blue-900 mt-1">
+            <div className=" font-bold m-0 py-1">{user.usename}</div>
+            <div className=" py-1">{user.introduce}</div>
+            {/* <div className="font-bold text-blue-900 mt-1">
               <a href="https://github.com/hyelim3">github.com/hyelim3</a>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

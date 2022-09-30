@@ -38,7 +38,7 @@ const Grid = ({ user, onRemove, userid }) => {
       }
     };
     getImage();
-  }, []); //[images] 이미지가 바뀌면 리렌더링, 계속 실행이 됨
+  }, [images]); //[images] 이미지가 바뀌면 리렌더링, 계속 실행이 됨
 
   useEffect(() => {
     const getData = async () => {

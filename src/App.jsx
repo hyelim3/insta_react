@@ -34,6 +34,12 @@ function App() {
   // const [follow, setFollow] = useState("");
   // const [follower, setFollower] = useState("");
 
+  useEffect(() => {
+    if (user.userid == undefined) {
+      setLogined(false);
+    }
+  }, []);
+
   //회원가입_Join
   const joinmember = async (phonenumber, name, id, pass) => {
     try {
