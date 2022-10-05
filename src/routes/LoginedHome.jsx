@@ -21,7 +21,7 @@ const LoginedHome = ({
   user,
   setUser,
   onRemove,
-  onFollow,
+
   addToggle,
   onAddToggle,
   // onUpdate,
@@ -45,7 +45,7 @@ const LoginedHome = ({
           user={user}
           setUser={setUser}
           userid={userid}
-          onFollow={onFollow}
+
           // onUpdate={onUpdate}
           // onProfileToggle={onProfileToggle}
         />

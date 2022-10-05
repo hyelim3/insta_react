@@ -9,11 +9,12 @@ import { FaWindowClose } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { GrFormClose } from "react-icons/gr";
 
-function LoginedProfile({ user, setUser, userid, onFollow }) {
+function LoginedProfile({ user, setUser, userid }) {
   const [error, setError] = useState(null);
   const [profileImageToggle, setProfileImageToggle] = useState(false);
   const userinfo = JSON.parse(sessionStorage.getItem("user")) || ""; //현재로그인한 아이
   const [usename, setUseName] = useState(userinfo.usename);
+  const [followed, setFollowed] = useState(true);
   const [introduce, setIntroduce] = useState(userinfo.introduce);
   const [imgSrc, setImgSrc] = useState(user.imgSrc);
   const navigate = useNavigate();
@@ -123,6 +124,47 @@ function LoginedProfile({ user, setUser, userid, onFollow }) {
       });
   };
 
+  const onFollow = async (reqId, resId) => {
+    try {
+      const data = await axios({
+        //data 백엔드 데이터가 담김
+        url: `http://localhost:3002/follow?reqId=${reqId}&resId=${resId}`,
+        method: "GET",
+      });
+      console.log(data.data);
+      //false 팔로우 취소, true 팔로우
+      if (data.data == true) {
+        setFollowed(false);
+      } else if (data.data == false) {
+        setFollowed(true);
+      }
+    } catch (e) {
+      setError(e);
+    }
+  };
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const data = axios({
+          url: `http://localhost:3002/followed?reqId=${userinfo.userid}&resId=${userid}`,
+          method: "GET",
+        });
+
+        console.log(data.data);
+
+        if (data.data == true) {
+          setFollowed(true);
+        } else {
+          setFollowed(false);
+        }
+      } catch (e) {
+        setError(e);
+      }
+    };
+    getData();
+  }, []);
+
   return userinfo.userid === user.userid ? (
     <div className="flex-col flex  h-128 Profiles">
       <div className="flex h-3/5 ">
@@ -222,13 +264,12 @@ function LoginedProfile({ user, setUser, userid, onFollow }) {
                         </div>
                         <div className="form-control">
                           <span className="label-text">소개</span>
-
                           <input
                             style={{
                               lineHeight: "5rem",
                             }}
                             type="text"
-                            placeholder="검색"
+                            placeholder="자신을 소개해보세요"
                             className="input input-bordered"
                             onChange={onChangeIntroduce}
                             value={introduce || ""}
@@ -377,17 +418,28 @@ function LoginedProfile({ user, setUser, userid, onFollow }) {
             <button className="rounded-md border-gray-400 bg-white text-black hover:bg-white text-black hover:rounded-md hover:border-gray-400 btn btn-sm mt-2 mr-4">
               메시지 보내기
             </button>
-            <button
-              className="rounded-md border-gray-400 bg-white text-black hover:bg-white text-black hover:rounded-md hover:border-gray-400 btn btn-sm mt-2 mr-4"
-              onClick={() => {
-                //예, 아니요 창이 나옴
-                if (window.confirm("팔로우를 하시겠습니까?")) {
+            {followed ? (
+              <button
+                className="rounded-md border-gray-400 bg-white text-black hover:bg-white text-black hover:rounded-md hover:border-gray-400 btn btn-sm mt-2 mr-4"
+                onClick={() => {
+                  //예, 아니요 창이 나옴
+                  // if (window.confirm("팔로우를 하시겠습니까?")) {}
                   onFollow(userinfo.userid, user.userid);
-                }
-              }}
-            >
-              팔로우
-            </button>
+                }}
+              >
+                팔로우
+              </button>
+            ) : (
+              <button
+                className="rounded-md border-gray-400 bg-blue-500 text-black hover:bg-blue-500 text-black hover:rounded-md hover:border-gray-400 btn btn-sm mt-2 mr-4"
+                onClick={() => {
+                  onFollow(userinfo.userid, user.userid);
+                }}
+              >
+                팔로우 취소
+              </button>
+            )}
+
             <button className="mr-auto flex justify mt-4">
               <i className="fi fi-bs-menu-dots"></i>
             </button>

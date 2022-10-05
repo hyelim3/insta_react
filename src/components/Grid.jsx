@@ -273,8 +273,92 @@ const Grid = ({ user, onRemove, userid }) => {
       </button>
     </section>
   ) : (
+    //로그인한 사람에서 다른 유저 게시글 보기
     <div>
       <section className="mx-auto con section-2 relative">
+        {detailToggle && (
+          <div className="">
+            <div
+              className="articleDetail"
+              style={{ marginTop: `${windowY - 450}px` }}
+            >
+              <button onClick={() => {}}></button>
+
+              <div className="imgBox">
+                <img src={selectedImage.imgSrc} alt="" />
+              </div>
+              <div className="flex flex-raw mt-3">
+                <div style={{ marginLeft: "10px" }}>
+                  <FontAwesomeIcon icon={faHeart} className="icon" />
+                  <span> 좋아요 {selectedImage.imgLike}</span>
+                </div>
+                <div className="ml-4">
+                  <FontAwesomeIcon icon={faCommentDots} className="icon" />
+                  <span> 댓글 {selectedImage.imgReply}</span>
+                </div>
+              </div>
+              <div className="replyBox flex">
+                <button
+                  onClick={() => {
+                    setDetailToggle(false);
+                    setMenuToggle(false);
+                  }}
+                >
+                  <FaWindowClose
+                    style={{
+                      position: "absolute",
+                      right: "2",
+                      top: "2",
+                      fontSize: "1.5rem",
+                      color: "black",
+                      cursor: "pointer",
+                    }}
+                  />
+                </button>
+                <div>
+                  <button
+                    onClick={() => {
+                      onMenuToggle();
+
+                      setDeleteToggle(false);
+                    }}
+                  ></button>
+                </div>
+                <div className="w-12 h-12 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 img-Box ml-2 mt-2">
+                  <a href={user.userid}>
+                    <img src={user.imgSrc} alt="" />
+                  </a>
+                </div>
+                <div className="replyUserBox mt-4">
+                  <div>
+                    <a href={user.userid}>
+                      <span>{user.userid}</span>
+                    </a>
+                  </div>
+                  <div
+                    style={{
+                      borderBottom: "2px gray solid",
+                      marginTop: "35px",
+                      marginLeft: "-65px",
+                      width: "483px",
+                    }}
+                  ></div>
+                  <div
+                    style={{
+                      // border: "1px red solid",
+                      width: "400px",
+                      height: "400px",
+                      marginLeft: "-30px",
+                      marginTop: "10px",
+                    }}
+                  >
+                    <span>{selectedImage.body}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         <ul className="list-box grid grid-cols-3 gap-2 sm:gap-2 md:gap-3 lg:gap-4">
           {images.map((image, index) => (
             <li
@@ -300,6 +384,7 @@ const Grid = ({ user, onRemove, userid }) => {
             </li>
           ))}
         </ul>
+        {/* 위로가기 버튼 */}
         <button
           className="fixed bg-blue-200 topbtn"
           style={{
