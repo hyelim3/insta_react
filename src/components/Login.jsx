@@ -16,7 +16,7 @@ import LoginedHome from "../routes/LoginedHome";
   /* <FontAwesomeIcon icon={faTrashCan} /> 본문호출법*/
 }
 
-const Login = ({ onLoginToggle, setLoginToggle, onLogin }) => {
+const Login = ({ onLoginToggle, setLoginToggle, onLogin, logined }) => {
   const [idValue, setIdValue] = useState("");
   const [passValue, setPassValue] = useState("");
 

@@ -131,12 +131,12 @@ function LoginedProfile({ user, setUser, userid }) {
         url: `http://localhost:3002/follow?reqId=${reqId}&resId=${resId}`,
         method: "GET",
       });
-      console.log(data.data);
-      //false 팔로우 취소, true 팔로우
+      // console.log("data", data.data);
+      //false 팔로우 취소, true면 팔로우가 나옴
       if (data.data == true) {
-        setFollowed(false);
-      } else if (data.data == false) {
         setFollowed(true);
+      } else if (data.data == false) {
+        setFollowed(false);
       }
     } catch (e) {
       setError(e);
@@ -146,13 +146,11 @@ function LoginedProfile({ user, setUser, userid }) {
   useEffect(() => {
     const getData = async () => {
       try {
-        const data = axios({
+        const data = await axios({
           url: `http://localhost:3002/followed?reqId=${userinfo.userid}&resId=${userid}`,
           method: "GET",
         });
-
-        console.log(data.data);
-
+        // console.log(data);
         if (data.data == true) {
           setFollowed(true);
         } else {
@@ -420,6 +418,15 @@ function LoginedProfile({ user, setUser, userid }) {
             </button>
             {followed ? (
               <button
+                className="rounded-md border-gray-400 bg-blue-500 text-black hover:bg-blue-500 text-black hover:rounded-md hover:border-gray-400 btn btn-sm mt-2 mr-4"
+                onClick={() => {
+                  onFollow(userinfo.userid, user.userid);
+                }}
+              >
+                팔로우 취소
+              </button>
+            ) : (
+              <button
                 className="rounded-md border-gray-400 bg-white text-black hover:bg-white text-black hover:rounded-md hover:border-gray-400 btn btn-sm mt-2 mr-4"
                 onClick={() => {
                   //예, 아니요 창이 나옴
@@ -428,15 +435,6 @@ function LoginedProfile({ user, setUser, userid }) {
                 }}
               >
                 팔로우
-              </button>
-            ) : (
-              <button
-                className="rounded-md border-gray-400 bg-blue-500 text-black hover:bg-blue-500 text-black hover:rounded-md hover:border-gray-400 btn btn-sm mt-2 mr-4"
-                onClick={() => {
-                  onFollow(userinfo.userid, user.userid);
-                }}
-              >
-                팔로우 취소
               </button>
             )}
 
