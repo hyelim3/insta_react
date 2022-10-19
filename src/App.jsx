@@ -18,6 +18,7 @@ import { useRecoilState } from "recoil";
 import LoginedHome from "./routes/LoginedHome";
 import UnLoginHead from "./components/UnLoginedHead";
 import UnLoginedHome from "./routes/UnLoginedHome";
+import Main from "./components/Main";
 import Welcome from "./components/Welcome";
 
 function App() {
@@ -128,6 +129,19 @@ function App() {
                 />
               }
             />
+            <Route
+              path="/"
+              element={
+                <Main
+                  onLoginToggle={onLoginToggle}
+                  setLoginToggle={setLoginToggle}
+                  logined={logined}
+                  setLogined={setLogined}
+                  user={user}
+                  onAddToggle={onAddToggle}
+                />
+              }
+            />
             <Route path="/about" element={<About />} />
             <Route path="/join" element={<Join joinmember={joinmember} />} />
           </Routes>
@@ -142,7 +156,6 @@ function App() {
                   onLogin={onLogin}
                   logined={logined}
                   setLogined={setLogined}
-                  onLoginToggle={onLoginToggle}
                 />
               }
             />

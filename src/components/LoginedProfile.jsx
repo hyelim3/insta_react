@@ -16,7 +16,7 @@ function LoginedProfile({ user, setUser, userid }) {
   const [usename, setUseName] = useState(userinfo.usename);
   const [followed, setFollowed] = useState(true);
   const [introduce, setIntroduce] = useState(userinfo.introduce);
-  const [imgSrc, setImgSrc] = useState(user.imgSrc);
+  const [imgSrc, setImgSrc] = useState(user.userimgSrc);
   const navigate = useNavigate();
   const onMoveHomepage = () => {
     navigate(-1);
@@ -78,7 +78,7 @@ function LoginedProfile({ user, setUser, userid }) {
       });
       sessionStorage.setItem("user", JSON.stringify(data.data));
       setUser(data.data);
-      setImgSrc(data.data.imgSrc);
+      setImgSrc(data.data.userimgSrc);
     } catch (e) {
       setError(e);
     }
@@ -169,7 +169,7 @@ function LoginedProfile({ user, setUser, userid }) {
         <div className="flex justify-center items-center w-1/3 ">
           <div className="avatar">
             <div className="w-40 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-              <img src={user.imgSrc} alt="" />
+              <img src={user.userimgSrc} alt="" />
             </div>
           </div>
         </div>
@@ -404,7 +404,7 @@ function LoginedProfile({ user, setUser, userid }) {
         <div className="flex justify-center items-center w-1/3 ">
           <div className="avatar">
             <div className="w-40 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-              <img src={user.imgSrc} alt="" />
+              <img src={user.userimgSrc} alt="" />
             </div>
           </div>
         </div>

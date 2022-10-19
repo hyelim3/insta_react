@@ -63,9 +63,9 @@ const Login = ({ onLoginToggle, setLoginToggle, onLogin, logined }) => {
         <button
           className="LoginButton"
           onClick={() => {
+            onMoveHomepage();
             onLogin(idValue, passValue);
             onLoginToggle(false);
-            onMoveHomepage();
           }}
         >
           로그인

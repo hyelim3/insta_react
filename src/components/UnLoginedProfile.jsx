@@ -39,7 +39,7 @@ function UnLoginedProfile({ userid, user, setUser }) {
         <div className="flex justify-center items-center w-1/3 ">
           <div className="avatar">
             <div className="w-40 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-              <img src={user.imgSrc} alt="" />
+              <img src={user.userimgSrc} alt="" />
             </div>
           </div>
         </div>

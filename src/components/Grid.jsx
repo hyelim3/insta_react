@@ -168,7 +168,7 @@ const Grid = ({ user, onRemove, userid }) => {
               </div>
               <div className="w-12 h-12 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 img-Box ml-2 mt-2">
                 <a href={user.userid}>
-                  <img src={user.imgSrc} alt="" />
+                  <img src={user.userimgSrc} alt="" />
                 </a>
               </div>
               <div className="replyUserBox mt-4">
@@ -326,7 +326,7 @@ const Grid = ({ user, onRemove, userid }) => {
                 </div>
                 <div className="w-12 h-12 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 img-Box ml-2 mt-2">
                   <a href={user.userid}>
-                    <img src={user.imgSrc} alt="" />
+                    <img src={user.userimgSrc} alt="" />
                   </a>
                 </div>
                 <div className="replyUserBox mt-4">
