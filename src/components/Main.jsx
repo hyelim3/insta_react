@@ -3,10 +3,16 @@ import LoginedHead from "./LoginedHead";
 import "../styles/Head.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faBars } from "@fortawesome/free-solid-svg-icons";
-import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
 import { FaWindowClose } from "react-icons/fa";
+import {
+  FiSmile,
+  FiSend,
+  FiHeart,
+  FiMessageCircle,
+  FiBookmark,
+  FiMoreHorizontal,
+} from "react-icons/fi";
+
 const Main = ({
   onLoginToggle,
   setLoginToggle,
@@ -77,14 +83,14 @@ const Main = ({
         <div
           className="rounded-lg"
           style={{
-            width: "900px",
+            width: "500px",
             height: "90px",
             border: "1px rgb(209, 209, 209) solid",
             margin: "0 auto",
           }}
         >
           <ul
-            className="flex items-center justify-center gap-7 "
+            className="flex pl-3 items-center gap-7 font-light "
             style={{
               width: "100%",
               height: "95px",
@@ -126,18 +132,13 @@ const Main = ({
                 key={index}
                 className="rounded-lg"
                 style={{
-                  width: "650px",
-                  height: "600px",
+                  width: "500px",
+                  height: "630px",
                   border: "1px rgb(209, 209, 209) solid",
                   margin: "20px auto",
                 }}
               >
-                <div
-                  className="p-2"
-                  style={{
-                    border: "1px red solid",
-                  }}
-                >
+                <div className="p-2">
                   <div
                     className="relative w-12 rounded-full ring ring-offset-base-100 ring-offset-2"
                     style={{
@@ -157,7 +158,7 @@ const Main = ({
                         }}
                       />
                       <div
-                        className="flex justify-center text-sm pt-1 absolute"
+                        className=" flex justify-center text-base pt-1 absolute"
                         style={{
                           top: "20%",
                           left: "125%",
@@ -166,49 +167,103 @@ const Main = ({
                         {article.userid}
                       </div>
                     </a>
+                    <button
+                      className="text-xl absolute"
+                      style={{
+                        top: "30%",
+                        left: "950%",
+                      }}
+                    >
+                      <FiMoreHorizontal />
+                    </button>
                   </div>
                 </div>
-                <div
-                  style={{
-                    border: "1px red solid",
-                  }}
-                >
+                <div>
+                  {/* 게시글 이미지 */}
                   <div
                     style={{
                       height: "380px",
                     }}
                   >
-                    <a href={`/${article.userid}/${article.id}`}>
-                      <img
-                        src={article.imgSrc}
-                        alt=""
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                        }}
-                      />
-                    </a>
-                  </div>
-
-                  <div>
-                    <div
+                    <img
+                      src={article.imgSrc}
+                      alt=""
                       style={{
-                        height: "30px",
+                        width: "100%",
+                        height: "100%",
+                      }}
+                    />
+                  </div>
+                  {/* 좋아요 댓글 디엠 */}
+                  <div
+                    className="p-2 flex items-center"
+                    style={{
+                      height: "35px",
+                    }}
+                  >
+                    <div className="flex text-2xl gap-3">
+                      <button>
+                        <FiHeart />
+                      </button>
+                      <button className="">
+                        <FiMessageCircle />
+                      </button>
+                      <button>
+                        <FiSend />
+                      </button>
+                    </div>
+                    <button
+                      className="flex justify-end text-2xl"
+                      style={{
+                        width: "100%",
                       }}
                     >
-                      <div className="flex flex-row mt-2">
-                        <button style={{ marginLeft: "10px" }}>
-                          <FontAwesomeIcon icon={faHeart} className="icon" />
-                          <span> 좋아요 {article.imgLike}</span>
-                        </button>
-                        <button className="ml-4">
-                          <FontAwesomeIcon
-                            icon={faCommentDots}
-                            className="icon"
-                          />
-                          <span> 댓글 {article.imgReply}</span>
-                        </button>
-                      </div>
+                      <FiBookmark />
+                    </button>
+                  </div>
+
+                  <div className="pl-2 p-1 font-bold">
+                    좋아요 {article.imgLike}개
+                  </div>
+                  <div
+                    className="pl-2 flex gap-2"
+                    style={{
+                      height: "45px",
+                    }}
+                  >
+                    <div className=" font-bold text-ms">{article.userid}</div>
+                    <div>게시글 내용입니다</div>
+                  </div>
+                  <div
+                    className="pl-2 pb-2"
+                    style={{
+                      color: "#999999",
+                    }}
+                  >
+                    댓글 {article.imgReply}개
+                  </div>
+                  <div
+                    className=""
+                    style={{
+                      borderTop: "1px rgb(209, 209, 209) solid",
+                    }}
+                  >
+                    <div
+                      className=" flex items-center text-2xl pl-1 gap-2"
+                      style={{
+                        height: "40px",
+                      }}
+                    >
+                      <FiSmile />
+                      <a
+                        className="text-sm"
+                        style={{
+                          color: "#999999",
+                        }}
+                        href={`/${article.userid}/${article.id}`}
+                      >
+                        댓글 달기...
+                      </a>
                     </div>
                   </div>
                 </div>

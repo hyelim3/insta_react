@@ -2,6 +2,14 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FaWindowClose } from "react-icons/fa";
 import {
+  FiSmile,
+  FiSend,
+  FiHeart,
+  FiMessageCircle,
+  FiBookmark,
+  FiMoreHorizontal,
+} from "react-icons/fi";
+import {
   faHeart,
   faBars,
   faArrowRight,
@@ -223,12 +231,12 @@ const GridDetail = ({
         setLogined={setLogined}
         user={user}
         setUser={setUser}
-        onSearch={onSearch}
-        setAddImageToggle={setAddImageToggle}
-        onAddImageToggle={onAddImageToggle}
-        searchedList={searchedList}
-        setSearchedList={setSearchedList}
-        userid={id}
+        // onSearch={onSearch}
+        // setAddImageToggle={setAddImageToggle}
+        // onAddImageToggle={onAddImageToggle}
+        // searchedList={searchedList}
+        // setSearchedList={setSearchedList}
+        // userid={id}
       />
       {/* {editToggle && (
         <GridEdit
@@ -240,7 +248,7 @@ const GridDetail = ({
       )} */}
       <div className="detailBox">
         <div className="articleDetail">
-          <div
+          {/* <div
             style={{
               position: "absolute",
               top: "85%",
@@ -259,8 +267,8 @@ const GridDetail = ({
             >
               <FontAwesomeIcon icon={faArrowLeft} />
             </button>
-          </div>
-          <div
+          </div> */}
+          {/* <div
             style={{
               position: "absolute",
               top: "85%",
@@ -279,21 +287,12 @@ const GridDetail = ({
             >
               <FontAwesomeIcon icon={faArrowRight} />
             </button>
-          </div>
+          </div> */}
 
-          <div className="imgBox">
+          <div className="imgBox flex items-center">
             <img src={img.imgSrc} alt="" />
           </div>
-          <div className="flex flex-raw mt-3">
-            <div style={{ marginLeft: "10px" }}>
-              <FontAwesomeIcon icon={faHeart} className="icon" />
-              <span> 좋아요 {img.imgLike}</span>
-            </div>
-            <div className="ml-4">
-              <FontAwesomeIcon icon={faCommentDots} className="icon" />
-              <span> 댓글 {img.imgReply}</span>
-            </div>
-          </div>
+
           <div className="replyBox flex">
             <button
               onClick={() => {
@@ -382,7 +381,7 @@ const GridDetail = ({
                 />
               </a>
             </div>
-            <div className="replyUserBox mt-7">
+            <div className="replyUserBox mt-6">
               <div>
                 <a href={`http://localhost:3000/${user.userid}`}>
                   <span>{user.userid}</span>
@@ -391,7 +390,7 @@ const GridDetail = ({
               <div
                 style={{
                   borderBottom: "2px gray solid",
-                  marginTop: "28px",
+                  marginTop: "26px",
                   marginLeft: "-65px",
                   width: "470px",
                 }}
@@ -483,8 +482,22 @@ reply VARCHAR(255)
                 </ul>
               </div>
               <div
+                className="p-2 flex items-center"
                 style={{
-                  marginTop: "30px",
+                  height: "35px",
+                }}
+              >
+                <button
+                  className="flex justify-end text-2xl"
+                  style={{
+                    width: "100%",
+                  }}
+                >
+                  <FiBookmark />
+                </button>
+              </div>
+              <div
+                style={{
                   borderBottom: "2px gray solid",
                   marginLeft: "-65px",
                   width: "470px",
@@ -495,31 +508,27 @@ reply VARCHAR(255)
                   //   onLike(img.id, userinfo.userid, img.imgSrc);
                 }}
               >
-                {like ? (
-                  <FontAwesomeIcon
-                    icon={faHeart}
-                    className="icon"
-                    style={{
-                      color: "pink",
-                    }}
-                  />
-                ) : (
-                  <FontAwesomeIcon
-                    icon={faHeart}
-                    className="icon"
-                    style={{
-                      color: "rgba(255,255,255,0.9)",
-                    }}
-                  />
-                )}
+                {/* {like ? (
+                  <div className="flex text-2xl gap-3">
+                    <FiHeart />
+                    <FiMessageCircle />
+                    <FiSend />
+                  </div>
+                ) : ( */}
+                <div className="flex text-2xl gap-3">
+                  <FiHeart />
+                  <FiMessageCircle />
+                  <FiSend />
+                </div>
+                {/* )} */}
               </button>
-              <span
-                style={{
-                  marginLeft: "5px",
-                }}
+              <div
+              // style={{
+              //   marginLeft: "4px",
+              // }}
               >
-                좋아요
-              </span>
+                좋아요 {user.imgLike}개
+              </div>
               <div
                 style={{
                   marginLeft: "-40px",
