@@ -20,6 +20,7 @@ import UnLoginHead from "./components/UnLoginedHead";
 import UnLoginedHome from "./routes/UnLoginedHome";
 import Main from "./components/Main";
 import Welcome from "./components/Welcome";
+import GridDetail from "./components/GridDetail";
 
 function App() {
   const [loginToggle, setLoginToggle] = useState(false);
@@ -27,6 +28,9 @@ function App() {
   const [error, setError] = useState(null);
   const [images, setImages] = useState([]);
   const [content, setContent] = useState("");
+  const [deleteToggle, setDeleteToggle] = useState(false);
+  const [menuToggle, setMenuToggle] = useState(false);
+  const [detailToggle, setDetailToggle] = useState(false);
   const [user, setUser] = useState(
     () => JSON.parse(sessionStorage.getItem("user")) || ""
   );
@@ -102,6 +106,17 @@ function App() {
     }
   };
 
+  const onDeleteToggle = () => {
+    setDeleteToggle(!deleteToggle);
+  };
+
+  const onMenuToggle = () => {
+    setMenuToggle(!menuToggle);
+  };
+  const onDetailToggle = () => {
+    setDetailToggle(!detailToggle);
+  };
+
   return (
     //https://velog.io/@jjhstoday/AWS-EC2%EC%97%90-React-Node.js-%EC%95%B1-%EB%B0%B0%ED%8F%AC%ED%95%98%EA%B8%B0-1-AWS-EC2-instance-%EC%83%9D%EC%84%B1
     // AWS React 연결 블로그
@@ -142,6 +157,32 @@ function App() {
                 />
               }
             />
+            <Route
+              path="/:userid/:id"
+              element={
+                <GridDetail
+                  user={user}
+                  // onLike={onLike}
+                  onRemove={onRemove}
+                  deleteToggle={deleteToggle}
+                  onDeleteToggle={onDeleteToggle}
+                  setDeleteToggle={setDeleteToggle}
+                  menuToggle={menuToggle}
+                  setMenuToggle={setMenuToggle}
+                  onMenuToggle={onMenuToggle}
+                  onLoginToggle={onLoginToggle}
+                  setLoginToggle={setLoginToggle}
+                  logined={logined}
+                  setLogined={setLogined}
+                  setUser={setUser}
+                  // onSearch={onSearch}
+                  // setAddImageToggle={setAddImageToggle}
+                  // onAddImageToggle={onAddImageToggle}
+                  // searchedList={searchedList}
+                  // setSearchedList={setSearchedList}
+                />
+              }
+            />
             <Route path="/about" element={<About />} />
             <Route path="/join" element={<Join joinmember={joinmember} />} />
           </Routes>
@@ -169,6 +210,32 @@ function App() {
                   loginToggle={loginToggle}
                   user={user}
                   setUser={setUser}
+                />
+              }
+            />
+            <Route
+              path="/:userid/:id"
+              element={
+                <GridDetail
+                  user={user}
+                  // onLike={onLike}
+                  onRemove={onRemove}
+                  deleteToggle={deleteToggle}
+                  onDeleteToggle={onDeleteToggle}
+                  setDeleteToggle={setDeleteToggle}
+                  menuToggle={menuToggle}
+                  setMenuToggle={setMenuToggle}
+                  onMenuToggle={onMenuToggle}
+                  onLoginToggle={onLoginToggle}
+                  setLoginToggle={setLoginToggle}
+                  logined={logined}
+                  setLogined={setLogined}
+                  setUser={setUser}
+                  // onSearch={onSearch}
+                  // setAddImageToggle={setAddImageToggle}
+                  // onAddImageToggle={onAddImageToggle}
+                  // searchedList={searchedList}
+                  // setSearchedList={setSearchedList}
                 />
               }
             />

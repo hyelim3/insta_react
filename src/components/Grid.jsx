@@ -8,15 +8,15 @@ import axios from "axios";
 import { AiOutlineMinusCircle } from "react-icons/ai";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { useNavigate } from "react-router-dom";
 
 const Grid = ({ user, onRemove, userid }) => {
+  const navigate = useNavigate();
   const [images, setImages] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [deleteToggle, setDeleteToggle] = useState(false);
-  const [menuToggle, setMenuToggle] = useState(false);
-  const [detailToggle, setDetailToggle] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
+  const id = selectedImage.id || "";
   const windowY = window.scrollY;
 
   const userinfo = JSON.parse(sessionStorage.getItem("user")) || ""; //현재로그인한 아이
@@ -24,6 +24,9 @@ const Grid = ({ user, onRemove, userid }) => {
     AOS.init();
   });
 
+  const onMoveHompage = () => {
+    navigate(`/${user.userid}/${id}`);
+  };
   useEffect(() => {
     const getImage = async () => {
       try {
@@ -63,180 +66,20 @@ const Grid = ({ user, onRemove, userid }) => {
     return <>Loading...</>;
   }
 
-  const onDeleteToggle = () => {
-    setDeleteToggle(!deleteToggle);
-  };
-
-  const onMenuToggle = () => {
-    setMenuToggle(!menuToggle);
-  };
-  const onDetailToggle = () => {
-    setDetailToggle(!detailToggle);
-  };
-
   return userinfo.userid === user.userid ? (
     <section className="mx-auto con section-2 relative">
-      {detailToggle && (
-        <div className="">
-          <div
-            className="articleDetail"
-            style={{ marginTop: `${windowY - 450}px` }}
-          >
-            <button onClick={() => {}}></button>
-
-            <div className="imgBox">
-              <img src={selectedImage.imgSrc} alt="" />
-            </div>
-            <div className="flex flex-raw mt-3">
-              <div style={{ marginLeft: "10px" }}>
-                <FontAwesomeIcon icon={faHeart} className="icon" />
-                <span> 좋아요 {selectedImage.imgLike}</span>
-              </div>
-              <div className="ml-4">
-                <FontAwesomeIcon icon={faCommentDots} className="icon" />
-                <span> 댓글 {selectedImage.imgReply}</span>
-              </div>
-            </div>
-            <div className="replyBox flex">
-              <button
-                onClick={() => {
-                  setDetailToggle(false);
-                  setMenuToggle(false);
-                }}
-              >
-                <FaWindowClose
-                  style={{
-                    position: "absolute",
-                    right: "2",
-                    top: "2",
-                    fontSize: "1.5rem",
-                    color: "black",
-                    cursor: "pointer",
-                  }}
-                />
-              </button>
-              <div>
-                <button
-                  onClick={() => {
-                    onMenuToggle();
-
-                    setDeleteToggle(false);
-                  }}
-                >
-                  <FontAwesomeIcon
-                    icon={faBars}
-                    style={{
-                      fontSize: "1.2rem",
-                      position: "absolute",
-                      right: "1%",
-                      top: "5%",
-                    }}
-                  />
-                </button>
-                {menuToggle && (
-                  <div
-                    style={{
-                      position: "absolute",
-                      right: "15%",
-                      top: "5%",
-                      display: "flex",
-                      flexDirection: "column",
-                      backgroundColor: "rgba(0,0,0, 0.05)",
-                      width: "100px",
-                      gap: "10px",
-                    }}
-                    // data-aos="fade-left"
-                    // //움직임, 애니메이션 효과
-                  >
-                    <button>수정</button>
-                    <button
-                      onClick={() => {
-                        onDeleteToggle();
-                      }}
-                    >
-                      삭제
-                    </button>
-                    <button
-                      onClick={() => {
-                        onMenuToggle();
-                      }}
-                    >
-                      취소
-                    </button>
-                  </div>
-                )}
-              </div>
-              <div className="w-12 h-12 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 img-Box ml-2 mt-2">
-                <a href={user.userid}>
-                  <img src={user.userimgSrc} alt="" />
-                </a>
-              </div>
-              <div className="replyUserBox mt-4">
-                <div>
-                  <a href={user.userid}>
-                    <span>{user.userid}</span>
-                  </a>
-                </div>
-                <div
-                  style={{
-                    borderBottom: "2px gray solid",
-                    marginTop: "35px",
-                    marginLeft: "-65px",
-                    width: "483px",
-                  }}
-                ></div>
-                <div
-                  style={{
-                    // border: "1px red solid",
-                    width: "400px",
-                    height: "400px",
-                    marginLeft: "-30px",
-                    marginTop: "10px",
-                  }}
-                >
-                  <span>{selectedImage.body}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-      {deleteToggle && (
-        <div
-          className="bg-base-100 shadow-xl deleteBox"
-          style={{ marginTop: `${windowY - 250}px`, zIndex: "998" }}
-        >
-          <div className="card-body">
-            <h2 className="card-title">해당 게시물을 정말 삭제하시겠습니까?</h2>
-            <div className="card-actions justify-end">
-              <button
-                className="btn btn-primary"
-                onClick={async () => {
-                  onRemove(selectedImage.id);
-                  onDeleteToggle();
-                  setDetailToggle(false);
-                  setMenuToggle(false);
-                }}
-              >
-                네
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
       <ul className="list-box grid grid-cols-3 gap-2 sm:gap-2 md:gap-3 lg:gap-4">
         {images.map((image, index) => (
           <li
             key={index}
             onClick={() => {
               setSelectedImage(image);
-
-              onDetailToggle();
-              // onDeleteToggle();
+              onMoveHompage();
             }}
           >
             <div>
               <img src={image.imgSrc} />
+
               <div>
                 <FontAwesomeIcon icon={faHeart} className="icon" />
                 <span>{image.imgLike}</span>
@@ -276,97 +119,13 @@ const Grid = ({ user, onRemove, userid }) => {
     //로그인한 사람에서 다른 유저 게시글 보기
     <div>
       <section className="mx-auto con section-2 relative">
-        {detailToggle && (
-          <div className="">
-            <div
-              className="articleDetail"
-              style={{ marginTop: `${windowY - 450}px` }}
-            >
-              <button onClick={() => {}}></button>
-
-              <div className="imgBox">
-                <img src={selectedImage.imgSrc} alt="" />
-              </div>
-              <div className="flex flex-raw mt-3">
-                <div style={{ marginLeft: "10px" }}>
-                  <FontAwesomeIcon icon={faHeart} className="icon" />
-                  <span> 좋아요 {selectedImage.imgLike}</span>
-                </div>
-                <div className="ml-4">
-                  <FontAwesomeIcon icon={faCommentDots} className="icon" />
-                  <span> 댓글 {selectedImage.imgReply}</span>
-                </div>
-              </div>
-              <div className="replyBox flex">
-                <button
-                  onClick={() => {
-                    setDetailToggle(false);
-                    setMenuToggle(false);
-                  }}
-                >
-                  <FaWindowClose
-                    style={{
-                      position: "absolute",
-                      right: "2",
-                      top: "2",
-                      fontSize: "1.5rem",
-                      color: "black",
-                      cursor: "pointer",
-                    }}
-                  />
-                </button>
-                <div>
-                  <button
-                    onClick={() => {
-                      onMenuToggle();
-
-                      setDeleteToggle(false);
-                    }}
-                  ></button>
-                </div>
-                <div className="w-12 h-12 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 img-Box ml-2 mt-2">
-                  <a href={user.userid}>
-                    <img src={user.userimgSrc} alt="" />
-                  </a>
-                </div>
-                <div className="replyUserBox mt-4">
-                  <div>
-                    <a href={user.userid}>
-                      <span>{user.userid}</span>
-                    </a>
-                  </div>
-                  <div
-                    style={{
-                      borderBottom: "2px gray solid",
-                      marginTop: "35px",
-                      marginLeft: "-65px",
-                      width: "483px",
-                    }}
-                  ></div>
-                  <div
-                    style={{
-                      // border: "1px red solid",
-                      width: "400px",
-                      height: "400px",
-                      marginLeft: "-30px",
-                      marginTop: "10px",
-                    }}
-                  >
-                    <span>{selectedImage.body}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
         <ul className="list-box grid grid-cols-3 gap-2 sm:gap-2 md:gap-3 lg:gap-4">
           {images.map((image, index) => (
             <li
               key={index}
               onClick={() => {
                 setSelectedImage(image);
-
-                onDetailToggle();
+                onMoveHompage();
                 // onDeleteToggle();
               }}
             >
