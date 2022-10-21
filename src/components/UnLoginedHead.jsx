@@ -70,10 +70,7 @@ const UnLoginedHead = ({
               className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
             >
               <li>
-                <a
-                  href="https://www.instagram.com/anjjaaang/"
-                  className="justify-between"
-                >
+                <a href={`/${userinfo.userid}`} className="justify-between">
                   프로필
                   <span className="badge">New</span>
                 </a>

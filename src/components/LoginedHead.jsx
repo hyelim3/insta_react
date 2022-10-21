@@ -113,10 +113,6 @@ const LoginedHead = ({
           </a>
         </div>
         <div className="flex-none gap-2 text-xl">
-          <a href={userinfo.userid}>
-            {/* home */}
-            <BiHomeAlt />
-          </a>
           <a href="#">
             {/* DM */}
             <FiSend />
@@ -158,10 +154,7 @@ const LoginedHead = ({
               className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
             >
               <li>
-                <a
-                  href="https://www.instagram.com/anjjaaang/"
-                  className="justify-between"
-                >
+                <a href={`/${userinfo.userid}`} className="justify-between">
                   프로필
                   <span className="badge">New</span>
                 </a>

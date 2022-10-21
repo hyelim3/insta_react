@@ -173,7 +173,7 @@ div > div:last-child > .icon {
 .articleDetail > .imgBox > img {
   display: block;
   width: 100%;
-  height: 90%;
+  height: 100%;
   object-fit: fill;
 }
 .replyBox {
