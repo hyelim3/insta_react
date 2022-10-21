@@ -7,6 +7,7 @@ import {
   faArrowRight,
   faArrowLeft,
   faComments,
+  faPooBolt,
 } from "@fortawesome/free-solid-svg-icons";
 import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
 import { useEffect } from "react";
@@ -193,6 +194,19 @@ const GridDetail = ({
   //     getData();
   //   }, [id]);
 
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const data = await axios({
+          url: `http://localhost:3002/likecheck?`,
+        });
+        setLike(data.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    getData();
+  }, []);
   //   useEffect(() => {
   //     const getData = async () => {
   //       try {
@@ -250,47 +264,6 @@ const GridDetail = ({
       )} */}
       <div className="detailBox">
         <div className="articleDetail">
-          {/* <div
-            style={{
-              position: "absolute",
-              top: "85%",
-              left: "2%",
-              zIndex: "999",
-              backgroundColor: "black",
-              borderRadius: "50%",
-              width: "30px",
-              textAlign: "center",
-            }}
-          >
-            <button
-              onClick={() => {
-                // onPrev();
-              }}
-            >
-              <FontAwesomeIcon icon={faArrowLeft} />
-            </button>
-          </div> */}
-          {/* <div
-            style={{
-              position: "absolute",
-              top: "85%",
-              right: "2%",
-              zIndex: "999",
-              backgroundColor: "black",
-              borderRadius: "50%",
-              width: "30px",
-              textAlign: "center",
-            }}
-          >
-            <button
-              onClick={() => {
-                // onNext();
-              }}
-            >
-              <FontAwesomeIcon icon={faArrowRight} />
-            </button>
-          </div> */}
-
           <div className="imgBox my-20">
             <img src={img.imgSrc} alt="" />
           </div>
@@ -629,47 +602,6 @@ reply VARCHAR(255)
       )} */}
       <div className="detailBox">
         <div className="articleDetail">
-          {/* <div
-            style={{
-              position: "absolute",
-              top: "85%",
-              left: "2%",
-              zIndex: "999",
-              backgroundColor: "black",
-              borderRadius: "50%",
-              width: "30px",
-              textAlign: "center",
-            }}
-          >
-            <button
-              onClick={() => {
-                // onPrev();
-              }}
-            >
-              <FontAwesomeIcon icon={faArrowLeft} />
-            </button>
-          </div> */}
-          {/* <div
-            style={{
-              position: "absolute",
-              top: "85%",
-              right: "2%",
-              zIndex: "999",
-              backgroundColor: "black",
-              borderRadius: "50%",
-              width: "30px",
-              textAlign: "center",
-            }}
-          >
-            <button
-              onClick={() => {
-                // onNext();
-              }}
-            >
-              <FontAwesomeIcon icon={faArrowRight} />
-            </button>
-          </div> */}
-
           <div className="imgBox my-20">
             <img src={img.imgSrc} alt="" />
           </div>
@@ -900,30 +832,6 @@ reply VARCHAR(255)
           </div>
         </div>
       </div>
-
-      {deleteToggle && (
-        <div
-          className="bg-base-100 shadow-xl deleteBox"
-          style={{ zIndex: "998" }}
-        >
-          <div className="card-body">
-            <h2 className="card-title">해당 게시물을 정말 삭제하시겠습니까?</h2>
-            <div className="card-actions justify-end">
-              <button
-                className="btn btn-primary"
-                onClick={async () => {
-                  onRemove(id);
-                  onMoveHomepage();
-                  onDeleteToggle();
-                  setMenuToggle(false);
-                }}
-              >
-                네
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

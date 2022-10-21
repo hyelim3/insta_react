@@ -117,6 +117,20 @@ function App() {
     setDetailToggle(!detailToggle);
   };
 
+  //좋아요 수
+  // const onLike = async() =>{
+  //   try{
+  //     await axios({
+  //       url: `http://localhost:3002/like?`,
+  //       method: "POST",
+  //     })
+
+  //    } catch(e){
+  //       setError(e);
+  //     }
+  //   }
+  // }
+
   return (
     //https://velog.io/@jjhstoday/AWS-EC2%EC%97%90-React-Node.js-%EC%95%B1-%EB%B0%B0%ED%8F%AC%ED%95%98%EA%B8%B0-1-AWS-EC2-instance-%EC%83%9D%EC%84%B1
     // AWS React 연결 블로그

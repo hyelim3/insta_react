@@ -205,9 +205,9 @@ const Main = ({
                       <button>
                         <FiHeart />
                       </button>
-                      <button className="">
+                      <a href={`/${article.userid}/${article.id}`}>
                         <FiMessageCircle />
-                      </button>
+                      </a>
                       <button>
                         <FiSend />
                       </button>

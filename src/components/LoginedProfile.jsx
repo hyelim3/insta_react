@@ -198,12 +198,6 @@ function LoginedProfile({ user, setUser, userid }) {
                 <div className="hero flex items-center justify-center min-h-screen absolute top-0">
                   {profileImageToggle && (
                     <div className="card card-compact w-96 bg-base-100 shadow-xl">
-                      {/* <figure>
-                        <img
-                          src="https://placeimg.com/400/225/arch"
-                          alt="Shoes"
-                        />
-                      </figure> */}
                       <div className="card-body">
                         <form
                           onSubmit={onSubmit}
@@ -345,9 +339,7 @@ function LoginedProfile({ user, setUser, userid }) {
             </div>
           </div>
           <div className="h-2/5">
-            <div className="font-bold text-blue-900 mt-3">
-              {/* <a href="https://github.com/hyelim3">github.com/hyelim3</a> */}
-            </div>
+            <div className="font-bold text-blue-900 mt-3"></div>
             <div className=" font-bold m-0 py-1">{user.usename}</div>
             <div className=" py-1">{user.introduce}</div>
           </div>
