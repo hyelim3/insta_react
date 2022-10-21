@@ -282,6 +282,8 @@ function LoginedProfile({ user, setUser, userid }) {
                           onClick={() => {
                             onMoveHomepage();
                             setProfileImageToggle(false);
+                            setIntroduce(user.introduce);
+                            setUseName(user.usename);
                           }}
                         >
                           <GrFormClose
