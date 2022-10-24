@@ -21,7 +21,6 @@ const LoginedHome = ({
   user,
   setUser,
   onRemove,
-
   addToggle,
   onAddToggle,
   // onUpdate,

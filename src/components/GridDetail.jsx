@@ -194,11 +194,26 @@ const GridDetail = ({
   //     getData();
   //   }, [id]);
 
+  //useEffect(() => {
+  //  const getData = async () => {
+  //    try {
+  //      const data = await axios({
+  //        url: `http://localhost:3002/likecheck?`,
+  //      });
+  //      setLike(data.data);
+  //    } catch (e) {
+  //      console.log(e);
+  //    }
+  //  };
+  //  getData();
+  //}, []);
+
   useEffect(() => {
     const getData = async () => {
       try {
         const data = await axios({
-          url: `http://localhost:3002/likecheck?`,
+          url: `http://localhost:3002/isLiked?userid=${userinfo.userid}&id=${id}`,
+          method: "GET",
         });
         setLike(data.data);
       } catch (e) {
@@ -206,37 +221,23 @@ const GridDetail = ({
       }
     };
     getData();
-  }, []);
-  //   useEffect(() => {
-  //     const getData = async () => {
-  //       try {
-  //         const data = await axios({
-  //           url: `http://localhost:3002/isLiked?userid=${userinfo.userid}&id=${id}`,
-  //           method: "GET",
-  //         });
-  //         setLike(data.data);
-  //       } catch (e) {
-  //         console.log(e);
-  //       }
-  //     };
-  //     getData();
-  //   }, [img.imgLike]);
+  }, [img.imgLike]);
 
-  //   useEffect(() => {
-  //     const getData = async () => {
-  //       try {
-  //         const data = await axios({
-  //           url: `http://localhost:3002/getImage/${id}`,
-  //           method: "GET",
-  //         });
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const data = await axios({
+          url: `http://localhost:3002/getImage/${id}`,
+          method: "GET",
+        });
 
-  //         setImg(data.data);
-  //       } catch (e) {
-  //         console.log(e);
-  //       }
-  //     };
-  //     getData();
-  //   }, [img]);
+        setImg(data.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    getData();
+  }, [img]);
 
   return userinfo.userid === user.userid ? (
     <div>
@@ -475,7 +476,7 @@ reply VARCHAR(255)
                     fontSize: "1.6rem",
                   }}
                   onClick={() => {
-                    //   onLike(img.id, userinfo.userid, img.imgSrc);
+                    onLike(img.id, userinfo.userid, img.imgSrc);
                   }}
                 >
                   {like ? (
@@ -504,7 +505,7 @@ reply VARCHAR(255)
                     width: "300px",
                   }}
                 >
-                  {userinfo.imgLike}명이 좋아합니다.
+                  {img.imgLike}명이 좋아합니다.
                 </div>
               </div>
               <div
@@ -756,7 +757,7 @@ reply VARCHAR(255)
                     fontSize: "1.6rem",
                   }}
                   onClick={() => {
-                    //   onLike(img.id, userinfo.userid, img.imgSrc);
+                    onLike(img.id, userinfo.userid, img.imgSrc);
                   }}
                 >
                   {like ? (
@@ -785,7 +786,7 @@ reply VARCHAR(255)
                     width: "300px",
                   }}
                 >
-                  {userinfo.imgLike}명이 좋아합니다.
+                  {img.imgLike}명이 좋아합니다.
                 </div>
               </div>
               <div

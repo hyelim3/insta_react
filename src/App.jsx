@@ -36,9 +36,6 @@ function App() {
   );
   //sessionStorage 브라우저 꺼지면 사라짐, 임시저장소, localStorage 자동로그인
 
-  // const [follow, setFollow] = useState("");
-  // const [follower, setFollower] = useState("");
-
   useEffect(() => {
     if (user.userid == undefined) {
       setLogined(false);
@@ -118,18 +115,17 @@ function App() {
   };
 
   //좋아요 수
-  // const onLike = async() =>{
-  //   try{
-  //     await axios({
-  //       url: `http://localhost:3002/like?`,
-  //       method: "POST",
-  //     })
-
-  //    } catch(e){
-  //       setError(e);
-  //     }
-  //   }
-  // }
+  const onLike = async (id, userid, imgSrc) => {
+    try {
+      const data = await axios({
+        url: `http://localhost:3002/Like?id=${id}&userid=${userid}&userimgSrc=${imgSrc}`,
+        method: "POST",
+      });
+      console.log(data.data);
+    } catch (e) {
+      setError(e);
+    }
+  };
 
   return (
     //https://velog.io/@jjhstoday/AWS-EC2%EC%97%90-React-Node.js-%EC%95%B1-%EB%B0%B0%ED%8F%AC%ED%95%98%EA%B8%B0-1-AWS-EC2-instance-%EC%83%9D%EC%84%B1
@@ -153,6 +149,7 @@ function App() {
                   onRemove={onRemove}
                   addToggle={addToggle}
                   onAddToggle={onAddToggle}
+                  //onLike={onLike}
                   // onProfileToggle={onProfileToggle}
                   // onUpdate={onUpdate}
                 />
@@ -168,6 +165,7 @@ function App() {
                   setLogined={setLogined}
                   user={user}
                   onAddToggle={onAddToggle}
+                  onLike={onLike}
                 />
               }
             />
@@ -176,7 +174,7 @@ function App() {
               element={
                 <GridDetail
                   user={user}
-                  // onLike={onLike}
+                  onLike={onLike}
                   onRemove={onRemove}
                   deleteToggle={deleteToggle}
                   onDeleteToggle={onDeleteToggle}
@@ -232,7 +230,7 @@ function App() {
               element={
                 <GridDetail
                   user={user}
-                  // onLike={onLike}
+                  onLike={onLike}
                   onRemove={onRemove}
                   deleteToggle={deleteToggle}
                   onDeleteToggle={onDeleteToggle}

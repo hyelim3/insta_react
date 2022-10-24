@@ -20,11 +20,14 @@ const Main = ({
   setLogined,
   user,
   onAddToggle,
+  onLike,
 }) => {
   const userinfo = JSON.parse(sessionStorage.getItem("user")) || "";
   const [users, setusers] = useState([]);
   const [articles, setAritcles] = useState([]);
   const [detailToggle, setDetailToggle] = useState(false);
+  const [img, setImg] = useState([]);
+  const [like, setLike] = useState(false);
   const windowY = window.scrollY;
 
   useEffect(() => {
@@ -202,8 +205,21 @@ const Main = ({
                     }}
                   >
                     <div className="flex text-2xl gap-3">
-                      <button>
-                        <FiHeart />
+                      <button
+                        onClick={() => {
+                          onLike(article.id, userinfo.userid, article.imgSrc);
+                        }}
+                      >
+                        {article.Liked == userinfo.userid &&
+                        article.Liked == "1" ? (
+                          <FiHeart
+                            style={{
+                              color: "pink",
+                            }}
+                          />
+                        ) : (
+                          <FiHeart />
+                        )}
                       </button>
                       <a href={`/${article.userid}/${article.id}`}>
                         <FiMessageCircle />
