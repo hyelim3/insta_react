@@ -115,12 +115,13 @@ function App() {
   };
 
   //좋아요 수
-  const onLike = async (id, userid, imgSrc) => {
+  const onLike = async (id, userid, userimgSrc) => {
     try {
       const data = await axios({
-        url: `http://localhost:3002/Like?id=${id}&userid=${userid}&userimgSrc=${imgSrc}`,
+        url: `http://localhost:3002/Like?id=${id}&userid=${userid}&userimgSrc=${userimgSrc}`,
         method: "POST",
       });
+
       console.log(data.data);
     } catch (e) {
       setError(e);

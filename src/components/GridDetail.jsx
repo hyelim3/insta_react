@@ -19,6 +19,7 @@ import {
   FiBookmark,
   FiMoreHorizontal,
 } from "react-icons/fi";
+import { FaHeart } from "react-icons/fa";
 import axios from "axios";
 import {
   useNavigate,
@@ -193,20 +194,6 @@ const GridDetail = ({
   //     };
   //     getData();
   //   }, [id]);
-
-  //useEffect(() => {
-  //  const getData = async () => {
-  //    try {
-  //      const data = await axios({
-  //        url: `http://localhost:3002/likecheck?`,
-  //      });
-  //      setLike(data.data);
-  //    } catch (e) {
-  //      console.log(e);
-  //    }
-  //  };
-  //  getData();
-  //}, []);
 
   useEffect(() => {
     const getData = async () => {
@@ -480,7 +467,7 @@ reply VARCHAR(255)
                   }}
                 >
                   {like ? (
-                    <FiHeart
+                    <FaHeart
                       style={{
                         color: "pink",
                       }}
@@ -761,7 +748,7 @@ reply VARCHAR(255)
                   }}
                 >
                   {like ? (
-                    <FiHeart
+                    <FaHeart
                       style={{
                         color: "pink",
                       }}

@@ -12,7 +12,7 @@ import {
   FiBookmark,
   FiMoreHorizontal,
 } from "react-icons/fi";
-
+import { FaHeart } from "react-icons/fa";
 const Main = ({
   onLoginToggle,
   setLoginToggle,
@@ -25,7 +25,6 @@ const Main = ({
   const userinfo = JSON.parse(sessionStorage.getItem("user")) || "";
   const [users, setusers] = useState([]);
   const [articles, setAritcles] = useState([]);
-  const [detailToggle, setDetailToggle] = useState(false);
   const [img, setImg] = useState([]);
   const [like, setLike] = useState(false);
   const windowY = window.scrollY;
@@ -57,21 +56,19 @@ const Main = ({
           url: `http://localhost:3002/getArticle/${userinfo.userid}`,
           method: "GET",
         });
+
         if (data.data == false) {
-          console.log("fa");
+          console.log("false");
         } else {
           setAritcles(data.data);
-          console.log(data.data);
         }
       } catch (e) {
         console.log(e);
       }
     };
     getData();
-  }, []);
-  const onDetailToggle = () => {
-    setDetailToggle(!detailToggle);
-  };
+  }, [articles]);
+
   return (
     <div>
       <LoginedHead
@@ -210,9 +207,8 @@ const Main = ({
                           onLike(article.id, userinfo.userid, article.imgSrc);
                         }}
                       >
-                        {article.Liked == userinfo.userid &&
-                        article.Liked == "1" ? (
-                          <FiHeart
+                        {article.Liked == "1" ? (
+                          <FaHeart
                             style={{
                               color: "pink",
                             }}
